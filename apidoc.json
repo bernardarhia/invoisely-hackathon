@@ -1,0 +1,42 @@
+{
+  "name": "eterlio api",
+  "version": "1.0.0",
+  "description": "callin API",
+  "title": "My API Documentation",
+  "url": "https://myapi.com",
+  "sampleUrl": "https://myapi.com",
+  "header": {
+    "title": "My API",
+    "content": "<h1>My API</h1>\n<p>My awesome API documentation.</p>"
+  },
+  "footer": {
+    "title": "eterlio  api",
+    "content": "<p>Copyright &copy; 2023 My Company.</p>"
+  },
+  "template": {
+    "withCompare": true,
+    "withGenerator": true,
+    "withPlayground": true,
+    "forceLanguage": "en"
+  },
+  "apidoc": {
+    
+  },
+  "markdown": {
+    "parser": "marked",
+    "renderer": "marked",
+    "lineEnding": "unix"
+  },
+  "files": [
+    "app.js",
+    "controllers/**/*"
+  ],
+  "excludeFiles": [
+    "node_modules/",
+    "**/test/**"
+  ],
+  "ignore": [
+    "node_modules/",
+    "**/test/**"
+  ]
+}

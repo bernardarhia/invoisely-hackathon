@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "commonjs",
+    "outDir": "./build",
+    "rootDir": "./",
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true
+  },
+  "include": ["*.ts", "./**/*.ts"],
+  "exclude": ["node_modules", "build"]
+}

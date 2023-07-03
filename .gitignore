@@ -1,0 +1,7 @@
+/node_modules
+.env
+build/
+.vscode/settings.json
+test.ts
+docs/*
+dump.rdb
