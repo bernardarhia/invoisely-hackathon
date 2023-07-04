@@ -16,7 +16,6 @@ describe("RESET PASSWORD /auth/reset-password", function () {
     await mockUser.create({
       dummyKey,
       password,
-      userPermission: "*",
     });
   });
   it("should change user password", async function () {

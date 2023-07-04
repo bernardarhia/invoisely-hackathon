@@ -1,5 +1,4 @@
 import { IData, ILimiter } from "./../interfaces/index";
-import { hasPermission } from "../helpers/permissions/permissions";
 import { Request, Response, NextFunction } from "express";
 import { TokenService } from "../helpers/auth/jwt";
 import { BANNED_COUNTRIES, RATE_LIMITS, httpCodes } from "../constants";
@@ -25,28 +24,6 @@ class AuthMiddleware {
     }
   }
 
-  public async isPermitted(
-    req: AuthRequest,
-    res: Response,
-    next: NextFunction,
-    data: IData,
-  ): Promise<any> {
-    const { user } = req;
-    try {
-      if (user.role === "admin") return next();
-      if (hasPermission(user.permission.access, data.permission)) {
-        return next();
-      }
-      return res
-        .status(403)
-        .json({ error: "You don't have permission to access this resource." });
-    } catch (error) {
-      console.log({ error: error.message });
-      return res
-        .status(403)
-        .json({ error: "Access to this resource is denied. 222" });
-    }
-  }
 
   public async rateLimit(
     req: AuthRequest,

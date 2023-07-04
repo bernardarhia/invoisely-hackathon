@@ -20,7 +20,6 @@ import { NextFunction, Response } from "express";
 
 const data: IData = {
   requireAuth: true,
-  permission: ["users", "update"],
   rules: {
     body: {
       email: {
