@@ -1,41 +1,129 @@
-import mongoose, { Document, Types, Schema } from "mongoose";
+import mongoose, { Types, Schema } from "mongoose";
 import { MongooseDefaults } from "../../constants";
-type InvoiceStatus = "pending" | "paid" | "cancelled" | "expired";
-export interface IInvoice {
+type InvoiceStatus = "pending" | "paid" | "cancelled" | "overdue";
+type RecurringFrequency = "daily" | "weekly" | "monthly" | "yearly";
+export interface InvoiceItem {
+  product: string;
+  price: number;
+  tax: number;
+  subTotal: number;
+}
+export interface Invoice {
   _id?: Types.ObjectId;
   userId: Types.ObjectId;
-  discount?: {
-    type: "percentage" | "number",
-    amount: number
-  };
-  amount: number;
   invoiceNumber: string;
-  status: InvoiceStatus;
-  deleted?: boolean;
+  items: InvoiceItem[];
+  discount?: {
+    type: "percentage" | "number";
+    amount: number;
+  };
+  totalAmount: number;
+  paymentStatus: InvoiceStatus;
+  isRecurring: boolean;
+  recurringFrequency: RecurringFrequency;
+  recurringStartDate: Date;
+  recurringEndDate: Date;
+  createdAt?: Date;
+  updatedAt: Date;
+  deleted: boolean;
 }
 
-export interface ISubscriptionInvoice extends IInvoice {
+export interface ISubscriptionInvoice extends Invoice {
   subscriptionId: Types.ObjectId;
 }
-const invoiceSchema = new Schema<IInvoice>(
+
+const invoiceStatuses: InvoiceStatus[] = [
+  "cancelled",
+  "overdue",
+  "paid",
+  "pending",
+];
+export const recurringFrequencies: RecurringFrequency[] = [
+  "monthly",
+  "daily",
+  "weekly",
+  "yearly",
+];
+const invoiceSchema = new Schema<Invoice>(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    invoiceNumber: { type: String, required: true },
-    amount: { type: Number, required: true },
-    discount: {
-      type: { type: String, default: "percentage" },
-      amount: { type: Number, required: false, default: 0 }
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    status: { type: String, required: true }
+    invoiceNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    items: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        tax: {
+          type: Number,
+          required: true,
+        },
+        subtotal: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    discount: {
+      type: {
+        type: String,
+        required: true,
+      },
+      amount: {
+        type: Number,
+        required: true,
+      },
+    },
+
+    totalAmount: {
+      type: Number,
+      required: true,
+    },
+    paymentStatus: {
+      type: String,
+      enum: invoiceStatuses,
+      default: "pending",
+    },
+    isRecurring: {
+      type: Boolean,
+      default: false,
+    },
+    recurringFrequency: {
+      type: String,
+      enum: recurringFrequencies,
+      default: "monthly",
+    },
+    recurringStartDate: {
+      type: Date,
+    },
+    recurringEndDate: {
+      type: Date,
+    },
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
-  {...MongooseDefaults, discriminatorKey: "__Type"},
+  { ...MongooseDefaults },
 );
 
-const Invoice = mongoose.model<IInvoice>("Invoice", invoiceSchema);
+const Invoice = mongoose.model("Invoice", invoiceSchema);
 
-const SubscriptionSchema = new Schema<ISubscriptionInvoice>({
-  subscriptionId: { type: mongoose.Schema.Types.ObjectId, ref: "Subscription", required: true },
-});
-
-export const SubscriptionInvoice = Invoice.discriminator("SubscriptionInvoice", SubscriptionSchema)
-export default Invoice;
+module.exports = Invoice;
