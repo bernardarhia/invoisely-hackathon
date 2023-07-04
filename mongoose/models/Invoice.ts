@@ -1,12 +1,14 @@
 import mongoose, { Types, Schema } from "mongoose";
 import { MongooseDefaults } from "../../constants";
+import { addInvoiceItems } from "../hooks/invoice/addInvoiceItems";
 type InvoiceStatus = "pending" | "paid" | "cancelled" | "overdue";
-type RecurringFrequency = "daily" | "weekly" | "monthly" | "yearly";
+export type RecurringFrequency = "daily" | "weekly" | "monthly" | "yearly";
+
+export type InvoiceDiscountType = "percentage" | "number"
 export interface InvoiceItem {
   product: string;
   price: number;
-  tax: number;
-  subTotal: number;
+  description?: string;
 }
 export interface Invoice {
   _id?: Types.ObjectId;
@@ -14,7 +16,7 @@ export interface Invoice {
   invoiceNumber: string;
   items: InvoiceItem[];
   discount?: {
-    type: "percentage" | "number";
+    type: InvoiceDiscountType;
     amount: number;
   };
   totalAmount: number;
@@ -68,14 +70,14 @@ const invoiceSchema = new Schema<Invoice>(
           type: Number,
           required: true,
         },
+        taxType: {
+          type: String,
+          required: false,
+        },
         tax: {
           type: Number,
-          required: true,
-        },
-        subtotal: {
-          type: Number,
-          required: true,
-        },
+          required: false,
+        }
       },
     ],
     discount: {
@@ -121,4 +123,5 @@ const invoiceSchema = new Schema<Invoice>(
   { ...MongooseDefaults },
 );
 
+invoiceSchema.pre("save", addInvoiceItems)
 export const InvoiceModel = mongoose.model("Invoice", invoiceSchema);

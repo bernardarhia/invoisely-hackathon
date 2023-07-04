@@ -6,12 +6,36 @@ import { AuthRequest } from "../../middleware";
 import { IData } from "../../interfaces/index";
 import { NextFunction, Response } from "express";
 import { invoiceService } from "../../services/invoice";
-import { Invoice } from "../../mongoose/models/Invoice";
+import { Invoice, RecurringFrequency, recurringFrequencies } from "../../mongoose/models/Invoice";
+import { hasValidInvoiceDiscount, hasValidInvoiceItems } from "../../services/invoice/utils";
 
-const data: IData = {
+const data: IData<Invoice> = {
   requireAuth: true,
   rules: {
-    body: {},
+    body: {
+     items:{
+      required: true,
+      validate: hasValidInvoiceItems
+     },
+     isRecurring:{
+      required: false,
+      validate: ({}, val: boolean)=> typeof val === "boolean"
+     },
+     recurringStartDate:{
+      required: false
+     },
+     recurringEndDate:{
+      required: false
+     },
+     recurringFrequency:{
+      required: false,
+      validate: ({}, val: RecurringFrequency)=> val && recurringFrequencies.includes(val)
+     },
+     discount:{
+      required: false,
+      validate: hasValidInvoiceDiscount
+     }
+    },
   },
 };
 async function createSingleInvoice(

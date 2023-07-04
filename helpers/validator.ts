@@ -1,37 +1,39 @@
-import { Request } from "express";
 
-interface DefaultOtherRuleType<T = any> {
-  value: T;
-  message: string;
-}
+import { AuthRequest } from "../middleware";
 
 export interface ValidationRule {
   required?:
     | boolean
-    | [(req: Request, val: any) => Promise<boolean> | boolean, string?]
+    | [(req: AuthRequest, val: any) => Promise<boolean> | boolean, string?]
     | Promise<boolean | [boolean, string?]>
-    | ((req: Request, val: any) => Promise<boolean> | boolean);
+    | ((req: AuthRequest, val: any) => Promise<boolean> | boolean);
+
+  authorize?:
+    | boolean
+    | ((req: AuthRequest, val: any) => Promise<boolean> | boolean)
+    | ((req: AuthRequest, val: any) => Promise<boolean> | boolean)[];
+
+  validate?:
+    | boolean
+    | ((
+        req: AuthRequest,
+        arg: any,
+      ) => boolean | Promise<boolean | [boolean, string]> | [boolean, string?])
+    | [(req: AuthRequest, val: any) => boolean | Promise<boolean>, string?]
+    | ((
+        req: AuthRequest,
+        arg: any,
+      ) =>
+        | boolean
+        | Promise<boolean | [Function | boolean, string?]>
+        | [Function | boolean, string?])[];
+
   sanitize?: (val: any) => any;
   fieldName?: string;
-  in?: any[];
-  exclude?: string | DefaultOtherRuleType<string | number>;
-  include?: string | DefaultOtherRuleType<string | number>;
-  match?: RegExp | DefaultOtherRuleType;
-  minLength?: number | DefaultOtherRuleType<number>;
-  maxLength?: number | DefaultOtherRuleType<number>;
-  minValue?: number | DefaultOtherRuleType<number>;
-  maxValue?: number | DefaultOtherRuleType<number>;
-  email?: boolean | DefaultOtherRuleType<string>;
-  dataType?: "string" | "boolean" | "number" | "array";
-  date?: boolean | DefaultOtherRuleType<boolean>;
-  sameAs?: string | DefaultOtherRuleType;
-  isValidMongoId?: boolean | ((value: string) => boolean);
 }
-
 export class Validator {
   static validateRequestBody(rules: Record<string, ValidationRule>) {
     return async (req: any, res: any, next: any) => {
-      if (!rules || Object.keys(rules).length === 0) return next();
       if (!isValidRule(rules)) {
         return next();
       } else {
@@ -43,12 +45,9 @@ export class Validator {
       }
     };
   }
-
   static validateRequestParams(rules: Record<string, ValidationRule>) {
     return async (req: any, res: any, next: any) => {
       if (!isValidRule(rules)) {
-        return next();
-      } else if (!rules || Object.keys(rules).length === 0) {
         return next();
       } else {
         const errors: string[] = await bundleValidation(rules, req, "params");
@@ -59,12 +58,9 @@ export class Validator {
       }
     };
   }
-
   static validateRequestQueries(rules: Record<string, ValidationRule>) {
     return async (req: any, res: any, next: any) => {
       if (!isValidRule(rules)) {
-        return next();
-      } else if (!rules || Object.keys(rules).length === 0) {
         return next();
       } else {
         const errors: string[] = await bundleValidation(rules, req, "query");
@@ -87,7 +83,7 @@ export function isValidRule(object: any): boolean {
 
 async function bundleValidation(
   rules: Record<string, ValidationRule>,
-  req: Request,
+  req: AuthRequest,
   validationIsFor: "params" | "body" | "query",
 ): Promise<string[]> {
   const errors: string[] = [];
@@ -120,30 +116,57 @@ async function bundleValidation(
       }
     }
 
+    // RULE CHECK FOR AUTHORIZE
+    if (ruleKeys.includes("authorize")) {
+      if (
+        (rule.authorize instanceof Function &&
+          !(await rule.authorize(req, value))) ||
+        (typeof rule.authorize === "boolean" && !rule.authorize)
+      ) {
+        errors.push(`Access to this resource is denied`);
+      } else if (Array.isArray(rule.authorize)) {
+        for (const authorizeFn of rule.authorize) {
+          if (!authorizeFn(req, value)) {
+            errors.push(`Access to this resource is denied`);
+          }
+          break; //break for the first try
+        }
+      }
+    }
+
+    // RULES FOR VALIDATION
+    if (ruleKeys.includes("validate")) {
+      const validators = Array.isArray(rule.validate)
+        ? rule.validate
+        : [rule.validate];
+      const generalValidateError = validators[1]
+        ? (validators[1] as string)
+        : `${rule.fieldName || field} is invalid.`;
+      for (const validator of validators) {
+        if (typeof validator === "boolean" && !validator) {
+          errors.push(generalValidateError);
+        } else if (typeof validator === "function") {
+          const result = validator(req, value);
+          if (typeof result === "boolean" && !result) {
+            errors.push(generalValidateError);
+          } else if (Array.isArray(result)) {
+            const [validatorFunc, errorMessage] = result;
+            if (
+              typeof validatorFunc === "function" &&
+              !validatorFunc(req, value)
+            ) {
+              errors.push(errorMessage || generalValidateError);
+            }
+            if (typeof validatorFunc === "boolean" && !validatorFunc) {
+              errors.push(errorMessage || generalValidateError);
+            }
+          }
+        }
+      }
+    }
+
     if (rule.sanitize) {
       req.body[field] = rule.sanitize(value);
-    }
-
-    if (rule.dataType && typeof value !== rule.dataType) {
-      errors.push(
-        `${rule.fieldName || field} expected ${
-          rule.dataType
-        } but got ${typeof value}`,
-      );
-    }
-
-    if (rule.in && !rule.in.includes(value)) {
-      errors.push(
-        `${rule.fieldName || field} must be in ${rule.in.join(",").trim()}`,
-      );
-    }
-
-    if (rule.minLength && value.length < rule.minLength) {
-      errors.push(
-        `${rule.fieldName || field} must have a min length of ${
-          rule.minLength
-        }`,
-      );
     }
   }
   return errors;

@@ -1,21 +1,6 @@
 import { RequestHandler } from "express";
 import { ValidationRule } from "../helpers/validator";
 import { JobOptions } from "bull";
-export type PermissionOperation = "create" | "read" | "update" | "delete";
-export type PermissionString =
-  | "users"
-  | "organization"
-  | "report"
-  | "invoice"
-  | "files"
-  | "income"
-  | "expenditure"
-  | "role"
-  | "plan";
-export type IPermission = Record<
-  PermissionString,
-  Record<PermissionOperation, number>
->;
 
 export type RouteTypes = "post" | "get" | "delete" | "put" | "patch";
 
@@ -29,14 +14,13 @@ export interface IRequestHeader {
   key: string;
   value: string;
 }
-export interface IData {
+export interface IData<T = any> {
   middleware?: RequestHandler[];
   requireAuth?: boolean;
   customAuth?: RequestHandler;
-  permission?: [PermissionString, PermissionOperation];
   rules?: {
     [key in "params" | "body" | "query"]?: {
-      [key: string]: ValidationRule;
+      [key in keyof T]?: ValidationRule;
     };
   };
   requestRateLimiter?: ILimiter;
