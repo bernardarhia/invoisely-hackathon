@@ -1,30 +1,21 @@
-/**
- * @api {post} /api/users/create Create User
- * @apiName POSTUser
- * @apiGroup User
- *
- *
- *
- */
-
 import {
   sendFailedResponse,
   sendSuccessResponse,
 } from "../../helpers/requestResponse";
-import { IUser } from "../../interfaces/users";
 import { AuthRequest } from "../../middleware";
 import { IData } from "../../interfaces/index";
 import { NextFunction, Response } from "express";
+import { invoiceService } from "../../services/invoice";
+import { Invoice } from "../../mongoose/models/Invoice";
 
 const data: IData = {
   requireAuth: true,
-  permission: ["users", "create"],
   rules: {
     body: {},
   },
 };
 async function createSingleInvoice(
-  req: AuthRequest<IUser>,
+  req: AuthRequest<Invoice>,
   res: Response,
   next: NextFunction,
 ) {
@@ -34,12 +25,15 @@ async function createSingleInvoice(
       createdBy: req.user.id,
     };
 
+    const createdInvoice = await invoiceService.create(body)
     sendSuccessResponse(
       res,
       next,
       {
         success: true,
-        response: {},
+        response: {
+          createdInvoice
+        },
       },
       201,
     );

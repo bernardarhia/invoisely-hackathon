@@ -1,4 +1,5 @@
-import mongoose, { ConnectOptions, Connection } from "mongoose";
+import mongoose, { ConnectOptions, Connection, Schema } from "mongoose";
+import { defaultPlugin } from "../mongoose/utils";
 
 interface MongooseOptions extends ConnectOptions {
   useNewUrlParser?: boolean;
@@ -14,8 +15,9 @@ class Database {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       } as MongooseOptions);
+      mongoose.plugin(defaultPlugin)
     } catch (error) {
-      console.log("some error", error.message);
+      console.log("Database Error", error.message);
     }
   }
 
@@ -29,3 +31,4 @@ class Database {
 }
 
 export default Database;
+

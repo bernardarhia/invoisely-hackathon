@@ -28,9 +28,6 @@ export interface Invoice {
   deleted: boolean;
 }
 
-export interface ISubscriptionInvoice extends Invoice {
-  subscriptionId: Types.ObjectId;
-}
 
 const invoiceStatuses: InvoiceStatus[] = [
   "cancelled",
@@ -124,6 +121,4 @@ const invoiceSchema = new Schema<Invoice>(
   { ...MongooseDefaults },
 );
 
-const Invoice = mongoose.model("Invoice", invoiceSchema);
-
-module.exports = Invoice;
+export const InvoiceModel = mongoose.model("Invoice", invoiceSchema);

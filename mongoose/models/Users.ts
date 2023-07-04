@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { IUser, userRoles } from "../../interfaces/users";
 import { MongooseDefaults } from "../../constants";
-import { deletedPlugin } from "../utils";
+// import { deletedPlugin } from "../utils";
 import { userExists } from "../hooks/users/userAlreadyExists";
 
 export interface UserModel extends IUser {}
@@ -77,20 +77,7 @@ userSchema.virtual("organizationHasSubscription", {
   justOne: true,
 });
 
-userSchema
-  .virtual("hasActiveSubscription", {
-    ref: "Subscription", // Name of the referenced model
-    localField: "organizationId", // Field in the current model
-    foreignField: "_id", // Field in the referenced model
-    justOne: true,
-    match: { status: "active" },
-  })
-  .get(function (this: IUser) {
-    const { subscription } = this;
-
-    return subscription && subscription.status === "active";
-  });
-userSchema.plugin(deletedPlugin);
+// userSchema.plugin(deletedPlugin);
 userSchema.pre("save", userExists);
 const User = mongoose.model<UserModel>("User", userSchema);
 

@@ -4,10 +4,7 @@ import {
   sendFailedResponse,
   sendSuccessResponse,
 } from "../../helpers/requestResponse";
-import { userService } from "../../services/users";
-import { AppError } from "../../helpers/errors";
 import { AuthRequest } from "../../middleware";
-import { VerifyAccountTokenType } from "../../mongoose/models/Tokens";
 
 const data: IData = {
   rules: {
