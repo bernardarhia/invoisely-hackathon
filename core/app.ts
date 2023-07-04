@@ -86,15 +86,6 @@ export class App implements HttpServer {
             await authMiddleware.checkAuth(req, res, next);
           } else next();
         },
-        async function verifyPermission(
-          req: AuthRequest,
-          res: Response,
-          next: NextFunction,
-        ): Promise<any> {
-          if (dataExists && data.permission && data.permission.length) {
-            await authMiddleware.isPermitted(req, res, next, data);
-          } else next();
-        },
         Validator.validateRequestBody(reqBody),
         Validator.validateRequestParams(reqParams),
         Validator.validateRequestQueries(reqQuery),

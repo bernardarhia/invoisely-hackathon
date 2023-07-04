@@ -7,7 +7,7 @@
  */
 
 import { assert } from "../../helpers/asserts";
-import { IData, PermissionOperation } from "../../interfaces";
+import { IData } from "../../interfaces";
 import { NextFunction, Request, Response } from "express";
 import {
   sendFailedResponse,
@@ -56,13 +56,6 @@ async function registerHandler(
   try {
     const user = await userService.findOne({ email });
 
-    // give organization only organization - create permission for the first time
-    const permission: {
-      [key: string]: PermissionOperation[];
-    } = {
-      organization: ["create", "read", "update", "delete"],
-      plan: ["create", "read"],
-    };
     assert(!user, "User already exists");
     const createdUser = await createUser({
       email,

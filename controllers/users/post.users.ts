@@ -21,12 +21,10 @@ import { NextFunction, Response } from "express";
 
 const data: IData = {
   requireAuth: true,
-  permission: ["users", "create"],
   rules: {
     body: {
       email: {
         required: true,
-        minLength: 10,
       },
       phone: {
         required: true,
@@ -44,12 +42,6 @@ const data: IData = {
       lastName: {
         required: true,
         fieldName: "Last name",
-      },
-      permission: {
-        required: true,
-      },
-      organizationId: {
-        required: true,
       },
       status: {},
     },
