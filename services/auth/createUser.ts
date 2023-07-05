@@ -1,5 +1,5 @@
 import { passwordManager } from "./../../helpers/auth/password";
-import User, { UserModel } from "./../../mongoose/models/Users";
+import User, { UserModel } from "../../database/models/Users";
 
 export const createUser = async (
   data: Pick<UserModel, "email" | "password" | "role">,

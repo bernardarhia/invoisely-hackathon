@@ -16,7 +16,7 @@ import {
 import { TokenService } from "../../helpers/auth/jwt";
 import { RATE_LIMITS } from "../../constants";
 import { userService } from "../../services/users";
-import Tokens from "../../mongoose/models/Tokens";
+import Tokens from "../../database/models/Tokens";
 import { AppError } from "../../helpers/errors";
 
 const data: IData = {

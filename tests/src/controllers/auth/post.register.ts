@@ -7,7 +7,7 @@ chai.use(chaiAsPromise);
 chai.use(chaiHttp);
 chai.should();
 
-describe.only("REGISTER USER /auth/register", function () {
+describe("REGISTER USER /auth/register", function () {
   const userDetails = {
     email: faker.internet.email(),
     password: `Test12345!`,

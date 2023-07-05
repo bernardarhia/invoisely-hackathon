@@ -1,14 +1,13 @@
 
 import { Model, Types } from "mongoose";
-import User, { UserModel } from "../../../mongoose/models/Users";
+import User, { UserModel } from "../../../database/models/Users";
 import { MockBase } from "../../core/MockBase";
 import { mockUserTemplate } from "./userTemplate";
 import { range } from "lodash";
 import { generateTokens } from "../../../helpers/auth/jwt";
-import { ITokens } from "../../../mongoose/models/Tokens";
+import { ITokens } from "../../../database/models/Tokens";
 import { v4 as uuid } from "uuid";
-import { assert } from "../../../helpers/asserts";
-import { passwordManager } from "../../../helpers/auth/password";
+
 interface IUserMock extends UserModel {
   tokens?: ITokens;
   dummyKey?: string;
@@ -69,7 +68,7 @@ export class UserMock extends MockBase<IUserMock> {
     }
     return this.data;
   }
-  async deleteOne(id: Types.ObjectId): Promise<null> {
+  async deleteOne(id: string): Promise<null> {
     const newData = this.data.filter((data: IUserMock) => data.id !== id);
     this.data = newData;
     return null;

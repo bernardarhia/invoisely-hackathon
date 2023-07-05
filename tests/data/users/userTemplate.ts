@@ -2,13 +2,9 @@ import mongoose from "mongoose";
 import { faker } from "@faker-js/faker";
 import { selectRandomItem } from "../../../utils";
 import { UserRole, userRoles } from "../../../interfaces/users";
-import { UserModel } from "../../../mongoose/models/Users";
+import { UserModel } from "../../../database/models/Users";
+import { v4 as uuid } from "uuid";
 
-interface Country {
-  country: string;
-  code: string;
-  iso: string;
-}
 export const mockUserTemplate = (): Partial<UserModel> => {
   return {
     email: faker.internet.email(),
@@ -37,7 +33,7 @@ export const mockUserTemplate = (): Partial<UserModel> => {
     status: "active",
     deleted: false,
     isLoggedIn: true,
-    createdBy: new mongoose.Types.ObjectId(),
-    updatedBy: new mongoose.Types.ObjectId(),
+    createdBy: uuid(),
+    updatedBy: uuid(),
   };
 };

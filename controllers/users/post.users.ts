@@ -12,7 +12,6 @@ import {
   sendSuccessResponse,
 } from "../../helpers/requestResponse";
 import { IUser } from "../../interfaces/users";
-import { EmailJob } from "../../jobs/EmailJob";
 import { AuthRequest } from "../../middleware";
 import { userService } from "../../services/users";
 import { IData } from "./../../interfaces/index";
@@ -33,14 +32,18 @@ const data: IData<IUser> = {
       },
       role: {
         required: true,
+        validate: ({}, role: string) => role === "client"
       },
       firstName: {
         required: true,
         fieldName: "First name",
+        validate: ({}, firstName: string) => [firstName.length >= 3, "First Name should be 3 or more characters long"]
+
       },
       lastName: {
         required: true,
         fieldName: "Last name",
+        validate: ({}, lastName: string) => [lastName.length >= 3, "Last Name should be 3 or more characters long"]
       },
       status: {},
     },
@@ -66,14 +69,7 @@ async function createSingleHandler(
       },
       201,
     );
-    await EmailJob.sendUserCreatedEmail({
-      email: user.email,
-      data: {
-        email: user.email,
-        fullName: `${user.firstName} ${user.lastName}`,
-        password: req.body.password,
-      },
-    });
+   
   } catch (error) {
     sendFailedResponse(res, next, error);
   }
