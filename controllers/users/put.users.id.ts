@@ -14,7 +14,6 @@ import { IUser } from "../../interfaces/users";
 import { AuthRequest } from "../../middleware";
 import { userService } from "../../services/users";
 import { buildUpdatePayload } from "../../utils";
-import { userBelongsToOrganization } from "../../utils/access";
 import { IData } from "./../../interfaces/index";
 import { NextFunction, Response } from "express";
 

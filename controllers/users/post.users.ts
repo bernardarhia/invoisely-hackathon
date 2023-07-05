@@ -15,11 +15,10 @@ import { IUser } from "../../interfaces/users";
 import { EmailJob } from "../../jobs/EmailJob";
 import { AuthRequest } from "../../middleware";
 import { userService } from "../../services/users";
-import { userBelongsToOrganization } from "../../utils/access";
 import { IData } from "./../../interfaces/index";
 import { NextFunction, Response } from "express";
 
-const data: IData = {
+const data: IData<IUser> = {
   requireAuth: true,
   rules: {
     body: {

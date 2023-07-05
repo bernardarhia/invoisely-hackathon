@@ -1,7 +1,7 @@
 import { IData, ILimiter } from "./../interfaces/index";
 import { Request, Response, NextFunction } from "express";
 import { TokenService } from "../helpers/auth/jwt";
-import { BANNED_COUNTRIES, RATE_LIMITS, httpCodes } from "../constants";
+import { RATE_LIMITS } from "../constants";
 import Database from "../core/database";
 import { RateLimiterMongo } from "rate-limiter-flexible";
 import { AppError } from "../helpers/errors";

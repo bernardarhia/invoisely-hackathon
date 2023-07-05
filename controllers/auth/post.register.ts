@@ -40,6 +40,7 @@ const data: IData = {
       },
       role: {
         required: true,
+        authorize: ({}, role: UserRole)=> role === "admin"
       },
     },
   },
@@ -60,7 +61,7 @@ async function registerHandler(
     const createdUser = await createUser({
       email,
       password,
-      role,
+      role
     });
 
     const tokens = await generateTokens(createdUser, "signup");
@@ -77,11 +78,6 @@ async function registerHandler(
       sameSite: "none",
     });
 
-    if (role === "orgAdmin") {
-      const organData = {
-        createdBy: createdUser.id,
-      };
-    }
     // Generate a unique URL with the token appended as a query parameter
     const generateVerificationUrl = (token: any) => {
       return `${BASE_URL}/verify?token=${token.token}&type=${token.type}`;

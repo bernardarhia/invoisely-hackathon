@@ -1,10 +1,18 @@
 name: Api Test
 
-on: push # run this workflow on push events
+on:
+  push: # run this workflow on push events
 
 jobs:
   build:
     runs-on: ubuntu-latest # specify the operating system for the job
+
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --restart always
 
     steps:
       - name: Checkout code
@@ -37,7 +45,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install # install dependencies from the project's package.json file
-        
+
       - name: Run tests
         run: |
           npm run build

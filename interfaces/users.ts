@@ -1,24 +1,13 @@
 import { Types } from "mongoose";
 import { IAddress, IPhone } from ".";
-import { ISubscription } from "./subscription";
 
 export type UserRole =
   | "admin"
-  | "orgAdmin"
-  | "subAdmin"
-  | "secretary"
-  | "lawyer"
-  | "client"
-  | "support";
+  | "client";
 
 export const userRoles: UserRole[] = [
   "admin",
-  "client",
-  "lawyer",
-  "orgAdmin",
-  "secretary",
-  "subAdmin",
-  "support",
+  "client"
 ];
 
 export type UserStatus =
@@ -41,20 +30,11 @@ export interface IUser {
   role: UserRole;
   firstName: string;
   lastName: string;
-  gender: "male" | "female";
-  physicalAddress: IAddress;
-  mailingAddress: IAddress;
-  belongsToOrg: boolean;
-  organizationId: Types.ObjectId;
+  physicalAddress?: IAddress;
+  mailingAddress?: IAddress;
   status: UserStatus;
   deleted: boolean;
   isLoggedIn: boolean;
-  dateOfBirth: Date;
-  lastLoggedInDate: Date;
   createdBy: Types.ObjectId;
   updatedBy: Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
-  subscription?: ISubscription;
-  organizationHasSubscription?: boolean;
 }
