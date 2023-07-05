@@ -1,13 +1,13 @@
 import { Resend } from "resend";
 import { MailOptions } from "../../interfaces";
-const { EMAIL_KEY, EMAIL_SENDER, WHITELISTED_EMAIL_DOMAIN, NODE_ENV } =
+const { EMAIL_API_KEY, EMAIL_SENDER, WHITELISTED_EMAIL_DOMAIN, NODE_ENV } =
   process.env;
 
 export class EmailService {
   private readonly transporter: Resend;
 
   constructor() {
-    this.transporter = new Resend(EMAIL_KEY);
+    this.transporter = new Resend(EMAIL_API_KEY);
   }
 
   public async sendEmail(mailOptions: MailOptions) {

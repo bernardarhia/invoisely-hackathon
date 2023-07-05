@@ -3,6 +3,7 @@ import { IUser, userRoles } from "../../interfaces/users";
 import { MongooseDefaults } from "../../constants";
 // import { deletedPlugin } from "../utils";
 import { userExists } from "../hooks/users/userAlreadyExists";
+import { defaultPlugin } from "../utils";
 
 export interface UserModel extends IUser {}
 
@@ -58,26 +59,8 @@ const userSchema = new mongoose.Schema<UserModel>(
   MongooseDefaults,
 );
 
-userSchema.virtual("permission", {
-  ref: "Permission",
-  localField: "_id",
-  foreignField: "userId",
-  justOne: true,
-});
-userSchema.virtual("subscription", {
-  ref: "Subscription",
-  localField: "_id",
-  foreignField: "userId",
-  justOne: true,
-});
-userSchema.virtual("organizationHasSubscription", {
-  ref: "Subscription",
-  localField: "organizationId",
-  foreignField: "_id",
-  justOne: true,
-});
 
-// userSchema.plugin(deletedPlugin);
+userSchema.plugin(defaultPlugin);
 userSchema.pre("save", userExists);
 const User = mongoose.model<UserModel>("User", userSchema);
 

@@ -8,7 +8,7 @@ export interface IDefaultPlugin {
   deletedAt:Date;
   deletedBy: Types.ObjectId;
 }
-export const defaultPlugin = function (schema: Schema<IDefaultPlugin>) {
+export const defaultPlugin = function (schema: Schema) {
   schema.add({
     createdAt: {
       type: Date,
@@ -25,7 +25,7 @@ export const defaultPlugin = function (schema: Schema<IDefaultPlugin>) {
     },
     deletedAt: {
       type: Date,
-      default: Date.now,
+      required: false
     },
     deletedBy: {
       type: Schema.Types.ObjectId,

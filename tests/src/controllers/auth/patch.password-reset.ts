@@ -2,7 +2,6 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import chaiAsPromise from "chai-as-promised";
 import { app } from "../../../core/app";
-import { faker } from "@faker-js/faker";
 import { mockUser } from "../../../data/users/UserMock";
 chai.use(chaiAsPromise);
 chai.use(chaiHttp);

@@ -65,9 +65,7 @@ export class TokenService {
       const payload = TokenService.verifyAccessToken(accessToken);
       const id = payload._id || payload.id;
       if (!payload) throw new AppError(httpCode, httpMessage);
-      const user = await userService.findOne({ _id: id }, null, {
-        permission: [],
-      });
+      const user = await userService.findOne({ _id: id });
 
       req.user = user;
       next();

@@ -42,7 +42,6 @@ export interface IUser {
   firstName: string;
   lastName: string;
   gender: "male" | "female";
-  // permission: number;
   physicalAddress: IAddress;
   mailingAddress: IAddress;
   belongsToOrg: boolean;
@@ -56,11 +55,6 @@ export interface IUser {
   updatedBy: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
-  permission: {
-    access: string;
-    userId?: Types.ObjectId;
-    _id?: Types.ObjectId;
-  };
   subscription?: ISubscription;
   organizationHasSubscription?: boolean;
 }

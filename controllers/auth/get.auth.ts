@@ -35,7 +35,6 @@ async function checkAuthHandler(
     const authUser = await userService.findOne(
       { _id: user.id, deleted: false },
       { excludes: ["password"] },
-      { permission: ["access"], subscription: [], hasActiveSubscription: [] },
     );
 
     if (!authUser) return next(new AppError(401, "Unauthorized"));
