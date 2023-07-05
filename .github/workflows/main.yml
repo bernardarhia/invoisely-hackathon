@@ -24,6 +24,8 @@ jobs:
           PASSWORD_HASH: ${{ secrets.PASSWORD_HASH }}
           PASSWORD_SALT: ${{ secrets.PASSWORD_SALT }}
           ROOT_URI: ${{ secrets.ROOT_URI }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
         run: |
           echo "APP_PORT=${APP_PORT}" >> $GITHUB_ENV
           echo "JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}" >> $GITHUB_ENV
