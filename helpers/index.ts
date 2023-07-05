@@ -51,7 +51,3 @@ export const formatModelPopulate = (
   }
   return fields;
 };
-
-export function canCreateOrganization(req: AuthRequest): boolean {
-  return ["admin", "orgAdmin"].includes(req.user.role);
-}

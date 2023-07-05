@@ -75,33 +75,6 @@ export function queryBuilder(
 
   return { filter, options };
 }
-export const isValidMongoId = (id: Types.ObjectId): boolean => {
-  const isValid = Types.ObjectId.isValid(id);
-  return isValid;
-};
-
-export type NetworkTypes = "MTN" | "VODAFONE" | "AirtelTigo";
-
-const networkRegex: { [key in NetworkTypes]: RegExp } = {
-  MTN: /^([0])?([2]|[5])([4]|[5]|[3]|[9])\d{7}$/,
-  VODAFONE: /^([0])?([2]|[5])([0])\d{7}$/,
-  AirtelTigo: /^([0])?([2]|[5])([6]|[7])\d{7}$/,
-};
-
-export function getNetworkBaseOnNumber(
-  phoneNumber: string,
-): NetworkTypes | null {
-  let result: NetworkTypes | null = null;
-
-  for (const telecom in networkRegex) {
-    const regex = networkRegex[telecom];
-    if (regex.test(phoneNumber)) {
-      result = telecom as NetworkTypes;
-      break;
-    }
-  }
-  return result;
-}
 
 export const buildUpdatePayload = (data: Record<string, any>) => {
   const filteredData = Object.entries(data).reduce((result, [key, value]) => {

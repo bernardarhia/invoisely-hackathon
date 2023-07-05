@@ -69,8 +69,6 @@ export const RATE_LIMITS: IRateLimiter = {
   },
 };
 
-export const BANNED_COUNTRIES: string[] = [];
-
 export const MongooseDefaults = {
   timestamps: true,
   strict: true,

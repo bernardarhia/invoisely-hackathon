@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --timeout 20000 --recursive build/tests/src/**  --exit",
-    "start-build": "npm run clean-build && tsc -v && tsc -p tsconfig.json -w",
+    "build-api": "npm run clean-build && tsc -v && tsc -p tsconfig.json -w",
     "build": "npm run clean-build && tsc -v && tsc -p tsconfig.json",
-    "start": "cross-env NODE_ENV=development nodemon --config nodemon.json --verbose --signal SIGINT --watch ./build --exec \"node build/index.js\"",
+    "start-api": "cross-env NODE_ENV=development nodemon --config nodemon.json --verbose --signal SIGINT --watch ./build --exec \"node build/index.js\"",
     "createModel": "node ./build/commands/createModel.js",
     "clean-build": "rimraf build",
     "type": "module",
-    "build:docs": "apidoc -i ./controllers -o ./docs/",
+    "build-docs": "apidoc -i ./controllers -o ./docs/",
     "prod-build": "tsc -p tsconfig.json",
     "prod-start": "cross-env NODE_ENV=production node ./build/index.js"
   },
