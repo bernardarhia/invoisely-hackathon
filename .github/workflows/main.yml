@@ -18,7 +18,6 @@ jobs:
       - name: Set environment variables
         env:
           APP_PORT: ${{ secrets.APP_PORT }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_REFRESH_TOKEN_SECRET: ${{ secrets.JWT_REFRESH_TOKEN_SECRET }}
           JWT_TOKEN_SECRET: ${{ secrets.JWT_TOKEN_SECRET }}
           PASSWORD_HASH: ${{ secrets.PASSWORD_HASH }}
