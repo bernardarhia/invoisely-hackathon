@@ -20,7 +20,6 @@ export const mockUserTemplate = (): Partial<UserModel> => {
     role: selectRandomItem<UserRole>(userRoles),
     firstName: faker.internet.userName(),
     lastName: faker.internet.userName(),
-    gender: selectRandomItem<"female" | "male">(["male", "female"]),
     physicalAddress: {
       zipCode: faker.address.zipCode(),
       houseNumber: faker.address.buildingNumber(),
@@ -35,13 +34,9 @@ export const mockUserTemplate = (): Partial<UserModel> => {
       street: faker.address.street(),
       state: faker.address.state(),
     },
-    belongsToOrg: false,
-    organizationId: new mongoose.Types.ObjectId(),
     status: "active",
     deleted: false,
     isLoggedIn: true,
-    dateOfBirth: new Date(),
-    lastLoggedInDate: new Date(),
     createdBy: new mongoose.Types.ObjectId(),
     updatedBy: new mongoose.Types.ObjectId(),
   };

@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema<UserModel>(
     role: { type: String, default: "admin", enum: userRoles },
     firstName: { type: String },
     lastName: { type: String },
-    gender: { type: String, enum: ["male", "female"] },
     physicalAddress: {
       houseNumber: { type: String },
       zipCode: { type: String },
@@ -36,15 +35,8 @@ const userSchema = new mongoose.Schema<UserModel>(
       state: { type: String },
       street: { type: String },
     },
-    belongsToOrg: { type: Boolean },
-    organizationId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Organization",
-    },
     status: { type: String, default: "pendingApproval" },
     isLoggedIn: { type: Boolean },
-    dateOfBirth: { type: Date },
-    lastLoggedInDate: { type: Date },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -53,8 +45,6 @@ const userSchema = new mongoose.Schema<UserModel>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    createdAt: { type: Date },
-    updatedAt: { type: Date },
   },
   MongooseDefaults,
 );
