@@ -18,6 +18,7 @@ describe("REGISTER USER /auth/register", function () {
       .request(app.app)
       .post("/api/auth/register")
       .send(userDetails);
+      console.log(res.body)
     res.should.have.status(201);
     res.body.should.have.property("success").equal(true);
     res.body.should.have.property("response");
