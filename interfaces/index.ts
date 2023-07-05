@@ -1,6 +1,5 @@
 import { RequestHandler } from "express";
 import { ValidationRule } from "../helpers/validator";
-import { JobOptions } from "bull";
 
 export type RouteTypes = "post" | "get" | "delete" | "put" | "patch";
 
@@ -71,53 +70,3 @@ export type HttpCodeNames =
   | "SERVICE_UNAVAILABLE";
 
 export type Statuses = "failed" | "success" | "pending";
-
-export type JobId =
-  | "reset-password"
-  | "user-registration"
-  | "organization-invoice"
-  | "user-registration-invoice"
-  | "user-account-verification"
-  | "subscription-created"
-  | "user-created";
-
-export interface JobData<T> {
-  data: T;
-}
-export interface IJobOptions extends JobOptions {
-  jobId: JobId;
-}
-export interface IJobBase {
-  email: string;
-  jobId?: JobId;
-  accountVerificationToken?: string;
-  data?: {
-    email?: string;
-    password?: string;
-    fullName?: string;
-  };
-}
-
-export interface Attachment {
-  content?: string | Buffer;
-  filename?: string | false | undefined;
-  path?: string;
-}
-export type Tag = {
-  name: string;
-  value: string;
-};
-export interface MailOptions {
-  attachments?: Attachment[];
-  bcc?: string | string[];
-  cc?: string | string[];
-  from: string;
-  html?: string;
-  reply_to?: string | string[];
-  subject: string;
-  tags?: Tag[];
-  text?: string;
-  to: string | string[];
-}
-
-export interface EmailJobOptions extends MailOptions {}

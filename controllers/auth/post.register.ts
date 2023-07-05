@@ -17,7 +17,6 @@ import { generateTokens } from "../../helpers/auth/jwt";
 import { RATE_LIMITS, httpCodes } from "../../constants";
 import { createUser } from "../../services/auth/createUser";
 import { userService } from "../../services/users";
-import { EmailJob } from "../../jobs/EmailJob";
 import { UserRole } from "../../interfaces/users";
 import { AuthRequest } from "../../middleware";
 const { BASE_URL } = process.env;
@@ -78,17 +77,6 @@ async function registerHandler(
       sameSite: "none",
     });
 
-    // Generate a unique URL with the token appended as a query parameter
-    const generateVerificationUrl = (token: any) => {
-      return `${BASE_URL}/verify?token=${token.token}&type=${token.type}`;
-    };
-    const verifyAccountToken = tokens.verifyAccountToken;
-    const verificationUrl = generateVerificationUrl(verifyAccountToken);
-    // Send Email
-    await EmailJob.accountVerification({
-      email,
-      accountVerificationToken: verificationUrl,
-    });
     sendSuccessResponse(
       res,
       next,

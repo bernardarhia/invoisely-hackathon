@@ -13,9 +13,9 @@ export interface ITokens {
   } | null;
 }
 export interface TokenDocument extends Document {
-  _id: Types.ObjectId;
+  _id:string;
   tokens: ITokens;
-  userId: Types.ObjectId;
+  userId:string;
 }
 
 const tokenSchema = new Schema<TokenDocument>(
@@ -41,7 +41,7 @@ const tokenSchema = new Schema<TokenDocument>(
         },
       },
     },
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: String, ref: "User", required: true },
   },
   { timestamps: true },
 );

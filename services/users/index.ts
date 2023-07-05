@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import User, { UserModel } from "../../mongoose/models/Users";
+import User, { UserModel } from "../../database/models/Users";
 import { BaseService } from "..";
 
 class UserService extends BaseService<UserModel> {

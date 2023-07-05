@@ -106,6 +106,6 @@ export abstract class BaseService<T> implements IService<T> {
     return await this.model.countDocuments(filter);
   }
   async create(data: T): Promise<T> {
-    return await this.model.create(data);
+    return (await this.model.create(data)).toObject();
   }
 }

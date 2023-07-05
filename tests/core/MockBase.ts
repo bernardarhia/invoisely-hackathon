@@ -16,5 +16,5 @@ export abstract class MockBase<T> {
     totalDocumentToCreate?: number,
     overrideFields?: Partial<T>,
   ): Promise<Partial<T>[] | null>;
-  public abstract deleteOne(id: Types.ObjectId): Promise<null>;
+  public abstract deleteOne(id: string): Promise<null>;
 }

@@ -1,6 +1,6 @@
 import { Model } from "mongoose";
 import { BaseService } from "..";
-import { Invoice, InvoiceModel } from "../../mongoose/models/Invoice";
+import { Invoice, InvoiceModel } from "../../database/models/Invoice";
 
 class InvoiceService extends BaseService<Invoice> {
   protected readonly model: Model<Invoice>;

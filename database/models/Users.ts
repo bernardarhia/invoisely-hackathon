@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema<UserModel>(
     phone: {
       prefix: { type: String },
       number: { type: String },
-      country: { type: String },
     },
     password: { type: String, required: true },
     role: { type: String, default: "admin", enum: userRoles },
@@ -22,7 +21,6 @@ const userSchema = new mongoose.Schema<UserModel>(
     physicalAddress: {
       houseNumber: { type: String },
       zipCode: { type: String },
-      country: { type: String },
       city: { type: String },
       state: { type: String },
       street: { type: String },
@@ -30,7 +28,6 @@ const userSchema = new mongoose.Schema<UserModel>(
     mailingAddress: {
       houseNumber: { type: String },
       zipCode: { type: String },
-      country: { type: String },
       city: { type: String },
       state: { type: String },
       street: { type: String },
@@ -38,11 +35,11 @@ const userSchema = new mongoose.Schema<UserModel>(
     status: { type: String, default: "pendingApproval" },
     isLoggedIn: { type: Boolean },
     createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "User",
     },
     updatedBy: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "User",
     },
   },

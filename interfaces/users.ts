@@ -22,8 +22,8 @@ export const userStatuses: UserStatus[] = [
   "inactive",
 ];
 export interface IUser {
-  _id?: Types.ObjectId;
-  id?: Types.ObjectId;
+  _id?: string;
+  id?: string;
   email: string;
   phone: IPhone;
   password: string;
@@ -35,6 +35,6 @@ export interface IUser {
   status: UserStatus;
   deleted: boolean;
   isLoggedIn: boolean;
-  createdBy: Types.ObjectId;
-  updatedBy: Types.ObjectId;
+  createdBy: string;
+  updatedBy: string;
 }

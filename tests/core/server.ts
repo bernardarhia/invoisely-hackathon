@@ -3,7 +3,7 @@ dotenv.config();
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import { app } from "./app";
-import { defaultPlugin } from "../../mongoose/utils";
+import { defaultPlugin } from "../../database/utils";
 
 let mongooseMemoryServer;
 

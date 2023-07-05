@@ -5,7 +5,7 @@ import { AppError } from "../errors";
 import Tokens, {
   ITokens,
   VerifyAccountTokenType,
-} from "../../mongoose/models/Tokens";
+} from "../../database/models/Tokens";
 import { httpCodes } from "../../constants";
 import { userService } from "../../services/users";
 import { IUser } from "../../interfaces/users";

@@ -1,15 +1,21 @@
 import { Schema, Types } from "mongoose";
-// Define the plugin
+import { v4 as uuid } from "uuid";
 
 export interface IDefaultPlugin {
-  createdAt: Date;
-  updatedAt: Date;
-  deleted: boolean;
-  deletedAt:Date;
-  deletedBy: Types.ObjectId;
+  _id?:string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deleted?: boolean;
+  deletedAt?:Date;
+  deletedBy?: string;
+  createdBy?: string;
 }
 export const defaultPlugin = function (schema: Schema) {
   schema.add({
+    _id: {
+      type: String,
+      default: uuid,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -28,7 +34,12 @@ export const defaultPlugin = function (schema: Schema) {
       required: false
     },
     deletedBy: {
-      type: Schema.Types.ObjectId,
+      type: String,
+      ref: "User",
+      required: false,
+    },
+    createdBy: {
+      type: String,
       ref: "User",
       required: false,
     }

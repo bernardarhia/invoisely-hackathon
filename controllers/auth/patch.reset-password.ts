@@ -19,7 +19,7 @@ import { userService } from "../../services/users";
 
 import { IData } from "../../interfaces/index";
 import { AuthRequest } from "../../middleware";
-import { Validator } from "../../mongoose/validators";
+import { Validator } from "../../database/validators";
 
 const data: IData = {
   requireAuth: true,
