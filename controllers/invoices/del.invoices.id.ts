@@ -1,3 +1,12 @@
+/**
+ * @api {post} /api/:invoiceId/delete Delete Invoice
+ * @apiName DELETEInvoice
+ * @apiGroup Invoice
+ *
+ *
+ *
+ */
+
 import {
     sendFailedResponse,
     sendSuccessResponse,

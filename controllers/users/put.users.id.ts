@@ -1,11 +1,13 @@
 /**
- * @api {post} /api/users/create Create User
- * @apiName POSTUser
+ * @api {PUT} /api/users/:userId/update  Update User
+ * @apiName PUT User
  * @apiGroup User
  *
  *
  *
  */
+
+
 import {
   sendFailedResponse,
   sendSuccessResponse,
