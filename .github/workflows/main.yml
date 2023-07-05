@@ -26,12 +26,13 @@ jobs:
           ROOT_URI: ${{ secrets.ROOT_URI }}
         run: |
           echo "APP_PORT=${APP_PORT}" >> $GITHUB_ENV
-          echo "DATABASE_URL=${DATABASE_URL}" >> $GITHUB_ENV
           echo "JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}" >> $GITHUB_ENV
           echo "JWT_TOKEN_SECRET=${JWT_TOKEN_SECRET}" >> $GITHUB_ENV
           echo "PASSWORD_HASH=${PASSWORD_HASH}" >> $GITHUB_ENV
           echo "PASSWORD_SALT=${PASSWORD_SALT}" >> $GITHUB_ENV
           echo "ROOT_URI=${ROOT_URI}" >> $GITHUB_ENV
+          echo "EMAIL_API_KEY=${EMAIL_API_KEY}" >> $GITHUB_ENV
+          echo "EMAIL_SENDER=${EMAIL_SENDER}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm install # install dependencies from the project's package.json file
