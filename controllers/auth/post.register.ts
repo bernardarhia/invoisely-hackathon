@@ -89,10 +89,10 @@ async function registerHandler(
     const verifyAccountToken = tokens.verifyAccountToken;
     const verificationUrl = generateVerificationUrl(verifyAccountToken);
     // Send Email
-    await EmailJob.accountVerification({
-      email,
-      accountVerificationToken: verificationUrl,
-    });
+    // await EmailJob.accountVerification({
+    //   email,
+    //   accountVerificationToken: verificationUrl,
+    // });
     sendSuccessResponse(
       res,
       next,
