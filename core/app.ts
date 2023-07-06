@@ -133,7 +133,8 @@ export class App implements HttpServer {
       console.log(`App is running on port ${port}`);
     });
   }
-  private config() {
+  private config(){
+  
     this.app.use(
       cors({
         origin: [MAIN_ORIGIN], // Allow requests from this origin
@@ -145,79 +146,7 @@ export class App implements HttpServer {
         exposedHeaders: ["set-cookie"],
       }),
     );
-    this.app.use(cookieParser());
-
-    // if(NODE_ENV && NODE_ENV !="test"){
-    //   this.app.use(csrfProtection),
-    //   this.app.use((req: any, res: Response, next: NextFunction) => {
-    //     res.cookie('XSRF-TOKEN', req.csrfToken());
-    //     res.locals._csrf = req.csrfToken();
-    //     next();
-    //   });
-    // }
-
-    this.app.disable("x-powered-by");
-    this.app.use(compression());
-    this.app.use(bodyParser.urlencoded({ extended: false, limit: "50kb" }));
-    this.app.use(bodyParser.json());
-    // use express-mongo-sanitize
-    this.app.use(
-      mongoSanitize({
-        replaceWith: "_",
-        allowDots: true,
-        dryRun: true,
-        onSanitize: ({ key, req }) => {
-          console.warn({ key });
-        },
-      }),
-    );
-    // use xss
-    this.app.use((req, res, next) => {
-      const allowedRoutes = [];
-      const currentRoute = req.url;
-      if (!allowedRoutes.includes(currentRoute)) {
-        xss(req, res, next);
-      }
-      next();
-    });
-    // use hpp
-    this.app.use(hpp());
-
-    this.app.use(helmet());
-    this.app.use((req: Request, res: Response, next: NextFunction) => {
-      if (process.env.NODE_ENV !== "test") {
-        console.debug({
-          headers: req.headers,
-          host: req.hostname,
-          method: req.method,
-          url: req.url,
-          statusCode: req.statusCode,
-          body: req.body || {},
-          userAgent: req["user-agent"] || "",
-          ip: req.ip,
-          cookies: req.cookies,
-        });
-      }
-      next();
-    });
-    this.app.use(this.router);
-    this.app.all("*", (req, res, next) => {
-      res.status(404).send("Route not found");
-      next();
-    });
-    this.app.use(ErrorHandler.handle); this.app.use(
-      cors({
-        origin: [MAIN_ORIGIN], // Allow requests from this origin
-        methods: "GET, POST, DELETE, PUT", // Allow these HTTP methods
-        allowedHeaders: ["Content-Type", "Authorization"], // Allow these headers
-        credentials: true, // Allow cookies to be sent with requests
-        maxAge: 86400, // Cache preflight requests for one day
-        optionsSuccessStatus: 204, // Respond with a 204 No Content status for preflight requests
-        exposedHeaders: ["set-cookie"],
-      }),
-    );
-    this.app.use(cookieParser());
-    if (!["development", "testing"].includes(process.env.NODE_ENV)) {
+    if(!["development", "testing"].includes(process.env.NODE_ENV)){
       this.app.use(trebble({
         apiKey: process.env.TREBLLE_API_KEY,
         projectId: process.env.TREBLLE_PROJECT_ID,
@@ -225,31 +154,32 @@ export class App implements HttpServer {
       }))
     }
 
+    this.app.use(cookieParser());
 
 
     this.app.disable("x-powered-by");
     this.app.use(compression());
     this.app.use(bodyParser.urlencoded({ extended: false, limit: "50kb" }));
     this.app.use(bodyParser.json());
-    // set default security settings
-    this.app.use(helmet());
-    this.app.use(helmet.contentSecurityPolicy({
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", MAIN_ORIGIN],
-        styleSrc: ["'self'", MAIN_ORIGIN],
-        imgSrc: ["'self'", MAIN_ORIGIN],
-      },
-    }));
-
-    // ALLOW CLIENTS TO ACCESS API USING HTTPS
-    this.app.use(helmet({
-      hsts: {
-        maxAge: 31536000, // 1 year in seconds
-        includeSubDomains: true
-      }
-    }))
-    this.app.use(helmet.frameguard({ action: 'sameorigin' }));
+        // set default security settings
+        this.app.use(helmet());
+        this.app.use(helmet.contentSecurityPolicy({
+          directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", MAIN_ORIGIN],
+            styleSrc: ["'self'", MAIN_ORIGIN],
+            imgSrc: ["'self'", MAIN_ORIGIN],
+          },
+        }));
+    
+        // ALLOW CLIENTS TO ACCESS API USING HTTPS
+        this.app.use(helmet({
+          hsts: {
+            maxAge: 31536000, // 1 year in seconds
+            includeSubDomains: true
+          }
+        }))
+        this.app.use(helmet.frameguard({ action: 'sameorigin' }));
     // use express-mongo-sanitize
     this.app.use(
       mongoSanitize({
