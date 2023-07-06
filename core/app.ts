@@ -167,6 +167,7 @@ export class App implements HttpServer {
     this.app.use(bodyParser.json());
     this.app.use(helmet(
       {
+        'xPoweredBy': false,
         'xFrameOptions': { action: 'deny' }
       }
     ));
