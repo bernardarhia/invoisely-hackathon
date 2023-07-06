@@ -82,7 +82,7 @@ export class UserMock extends MockBase<IUserMock> {
   }
   getId(id: string): string {
     const user = this.data.find((_user: IUserMock) => _user.dummyKey === id);
-    return user.id.toString();
+    return user.id;
   }
 }
 

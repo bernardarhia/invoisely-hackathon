@@ -13,6 +13,8 @@ export interface InvoiceItem {
   quantity: number;
 }
 export interface Invoice extends IDefaultPlugin {
+  _id?:string;
+  id?:string;
   userId: string;
   invoiceNumber?: string;
   items: InvoiceItem[];
@@ -114,7 +116,7 @@ const invoiceSchema = new Schema<Invoice>(
       default: false,
     },
   },
-  { ...MongooseDefaults },
+  MongooseDefaults,
 );
 
 invoiceSchema.plugin(defaultPlugin);

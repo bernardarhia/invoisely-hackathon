@@ -62,15 +62,15 @@ export class InvoiceMock extends MockBase<IInvoiceMock> {
     return this.data;
   }
   async deleteOne(id: string): Promise<null> {
-    const newData = this.data.filter((data: IInvoiceMock) => data._id !== id);
+    const newData = this.data.filter((data: IInvoiceMock) => data.id !== id);
     this.data = newData;
     return null;
   }
 
   getId(id: string): string {
     const invoice = this.data.find((invoice: IInvoiceMock) => invoice.dummyKey === id);
-    return invoice._id.toString();
+    return invoice.id.toString();
   }
 }
 
-export const mockUser = new InvoiceMock(mockInvoiceTemplate, InvoiceModel);
+export const mockInvoice = new InvoiceMock(mockInvoiceTemplate, InvoiceModel);
