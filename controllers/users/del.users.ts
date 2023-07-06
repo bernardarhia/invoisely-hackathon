@@ -20,22 +20,23 @@ import { userService } from "../../services/users";
       }
     },
   };
-  async function deleteSingleUser(
+  async function deleteUsers(
     req: AuthRequest,
     res: Response,
     next: NextFunction,
   ) {
     try {
-      const userId = req.params.userId;
-          
-      const deletedInvoice = await userService.updateOne({ _id: userId },{ deleted: true });
+    
+      await userService.deleteMany({ createdBy: req.user.id });
       
       sendSuccessResponse(
         res,
         next,
         {
           success: true,
-          response: { ...deletedInvoice },
+          response: { 
+            message: "Users deleted"
+           },
         }
       );
     } catch (error) {
@@ -45,8 +46,8 @@ import { userService } from "../../services/users";
   
   export default {
     method: "delete",
-    url: "/api/:userId/delete",
-    handler: deleteSingleUser,
+    url: "/api/users/delete",
+    handler: deleteUsers,
     data,
   };
   

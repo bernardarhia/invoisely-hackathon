@@ -19,14 +19,16 @@ async function deleteInvoices(
 ) {
   try {
 
-    const deletedInvoices = await invoiceService.updateMany({ userId: req.user._id }, { deleted: true });
+    const deletedInvoices = await invoiceService.deleteMany({ createdBy: req.user.id });
 
     sendSuccessResponse(
       res,
       next,
       {
         success: true,
-        response: { ...deletedInvoices },
+        response: { 
+          message:"Invoice deleted"
+         },
       }
     );
   } catch (error) {

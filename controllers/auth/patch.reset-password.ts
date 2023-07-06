@@ -8,6 +8,10 @@
  * @apiSuccess {Object} response User Data
  * @apiPermission anyone
  * @apiSampleRequest https://callin.onrender.com
+ * @apiHeader {String} Authorization The token can be generated from your user profile.
+ * @apiHeaderExample {Header} Header-Example
+ *  "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo"
+ *
  * @apiBody {String} oldPassword  User's old password
  * @apiBody {String} newPassword  User's new password
  * @apiSuccessExample {json}
@@ -16,8 +20,8 @@
  * {
     "success": true,
     "response": {
-        "token": {
-            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo"
+        "token": {eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo
+            "accessToken": ""
         },
         "createdUser": {
             "email": "Joyce_Spencer@yahoo.com",
