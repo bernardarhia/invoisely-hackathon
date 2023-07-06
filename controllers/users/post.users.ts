@@ -1,11 +1,3 @@
-/**
- * @api {post} /api/users/create Create User
- * @apiName POSTUser
- * @apiGroup User
- *
- *
- *
- */
 
 import {
   sendFailedResponse,

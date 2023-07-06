@@ -1,11 +1,4 @@
-/**
- * @api {post} /api/:invoiceId/delete Delete Invoice
- * @apiName DELETEInvoice
- * @apiGroup Invoice
- *
- *
- *
- */
+
 
 import {
     sendFailedResponse,
@@ -37,15 +30,16 @@ import { canDeleteInvoice } from "../../services/invoice/utils";
     try {
       const invoiceId = req.params.invoiceId;
           
-      const deletedInvoice = await invoiceService.updateOne({ _id: invoiceId },{ deleted: true });
+       await invoiceService.deleteOne({ _id: invoiceId });
       
-      if(deletedInvoice && !deletedInvoice.deleted){}
       sendSuccessResponse(
         res,
         next,
         {
           success: true,
-          response: { ...deletedInvoice },
+          response: { 
+            message:"Invoice deleted"
+          },
         }
       );
     } catch (error) {

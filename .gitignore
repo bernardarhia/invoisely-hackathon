@@ -3,5 +3,5 @@
 build/
 .vscode/settings.json
 test.ts
-docs/*
+docs
 dump.rdb

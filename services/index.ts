@@ -108,4 +108,10 @@ export abstract class BaseService<T> implements IService<T> {
   async create(data: T): Promise<T> {
     return (await this.model.create(data)).toObject();
   }
+  async deleteOne(filter: FilterQuery<T>):Promise<void>{
+   await this.model.deleteOne(filter);
+  }
+  async deleteMany(filter: FilterQuery<T>):Promise<void>{
+   await this.model.deleteMany(filter);
+  }
 }

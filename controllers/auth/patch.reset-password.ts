@@ -1,10 +1,55 @@
 /**
- * @api {patch} /api/auth/reset-password Reset password
+ * @api {PATCHJ} /api/auth/reset-password Password Reset
  * @apiName PasswordReset
  * @apiGroup Auth
+ * @apiVersion 0.0.1
+ * @apiDescription Endpoint use to reset user's password 
+ * @apiSuccess {Boolean} success Request success
+ * @apiSuccess {Object} response User Data
+ * @apiPermission anyone
+ * @apiSampleRequest https://callin.onrender.com
+ * @apiHeader {String} Authorization The token can be generated from your user profile.
+ * @apiHeaderExample {Header} Header-Example
+ *  "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo"
  *
- *
+ * @apiBody {String} oldPassword  User's old password
+ * @apiBody {String} newPassword  User's new password
+ * @apiSuccessExample {json}
+    Success-Response:
+ *  HTTP/1.1 204 No Content
+ * {
+    "success": true,
+    "response": {
+        "token": {eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo
+            "accessToken": ""
+        },
+        "createdUser": {
+            "email": "Joyce_Spencer@yahoo.com",
+            "phone": {},
+            "role": "admin",
+            "mailingAddress": {},
+            "status": "active",
+            "deleted": false,
+            "createdAt": "2023-06-29T03:13:39.052Z",
+            "updatedAt": "2023-06-29T03:13:39.052Z",
+            "id": "649cf6e35ea0594996d36ba6"
+        }
+    }
+}
+ * 
+ * @apiError InputField is required
+ * @apiErrorExample {json}
+ * Error-Response:
+ * HTTP/1.1 400 BAD REQUEST
+ * {
+ *  "success":false,
+ *  "response":{
+ *    "message": "{Field} Required"
+ *  }
+ * }
  */
+
+ 
 
 import { Response, NextFunction } from "express";
 

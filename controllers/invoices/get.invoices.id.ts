@@ -1,11 +1,3 @@
-/**
- * @api {GET} /api/:invoiceId Get Invoice by Id
- * @apiName Get Invoice
- * @apiGroup Invoice
- *
- *
- *
- */
 
 
 import {
