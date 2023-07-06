@@ -30,6 +30,7 @@ import xss from "xss-clean";
 import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
 import trebble from '@treblle/express'
+import { RATE_LIMITS } from "../constants";
 const { MAIN_ORIGIN = "" } = process.env;
 export class App implements HttpServer {
   public app: Application;
@@ -121,6 +122,9 @@ export class App implements HttpServer {
     for (const route of routes) {
       const { method, url, data, handler } = route;
       if (hasCorrectHttpVerb(method) && handler instanceof Function) {
+        if(data && !data.requestRateLimiter || Object.keys(data.requestRateLimiter).length < 2){
+          data.requestRateLimiter = RATE_LIMITS.api
+        }
         this.addRoute(method, url, handler, data);
       }
     }
