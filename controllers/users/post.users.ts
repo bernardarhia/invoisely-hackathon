@@ -18,6 +18,7 @@ import { IData } from "./../../interfaces/index";
 import { NextFunction, Response } from "express";
 
 const data: IData<IUser> = {
+
   requireAuth: true,
   rules: {
     body: {
@@ -45,7 +46,7 @@ const data: IData<IUser> = {
         fieldName: "Last name",
         validate: ({}, lastName: string) => [lastName.length >= 3, "Last Name should be 3 or more characters long"]
       },
-      status: {},
+      mailingAddress: {}
     },
   },
 };

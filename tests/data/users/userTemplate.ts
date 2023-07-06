@@ -16,13 +16,6 @@ export const mockUserTemplate = (): Partial<UserModel> => {
     role: selectRandomItem<UserRole>(userRoles),
     firstName: faker.internet.userName(),
     lastName: faker.internet.userName(),
-    physicalAddress: {
-      zipCode: faker.address.zipCode(),
-      houseNumber: faker.address.buildingNumber(),
-      city: faker.address.city(),
-      street: faker.address.street(),
-      state: faker.address.state(),
-    },
     mailingAddress: {
       zipCode: faker.address.zipCode(),
       houseNumber: faker.address.buildingNumber(),
@@ -32,7 +25,6 @@ export const mockUserTemplate = (): Partial<UserModel> => {
     },
     status: "active",
     deleted: false,
-    isLoggedIn: true,
     createdBy: uuid(),
     updatedBy: uuid(),
   };

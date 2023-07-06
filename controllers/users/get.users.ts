@@ -1,48 +1,35 @@
-/**
- * @api {GET} /api/:invoiceId Get Invoice by Id
- * @apiName Get Invoice
- * @apiGroup Invoice
- *
- *
- *
- */
-
-
 import {
     sendFailedResponse,
     sendSuccessResponse,
   } from "../../helpers/requestResponse";
   import { AuthRequest } from "../../middleware";
-import { invoiceService } from "../../services/invoice";
+import { userService } from "../../services/users";
+import { queryBuilder } from "../../utils";
   import { IData } from "./../../interfaces/index";
   import { NextFunction, Response } from "express";
   
   const data: IData = {
-    permittedRoles: ["admin", "client"],
+    permittedRoles: ["admin"],
     requireAuth: true,
-    rules: {
-      params: {
-        invoiceId: {
-          required: true,
-        },
-      }
-    },
+    rules:{
+        query: {}
+    } 
   };
-  async function getSingleInvoice(
+  async function getUsers(
     req: AuthRequest,
     res: Response,
     next: NextFunction,
   ) {
     try {
-      const invoiceId = req.params.invoiceId;
-      const invoice = await invoiceService.findOne({_id: invoiceId, deleted: false});
-      
+        const query  = queryBuilder(req.query, Object.keys(req.query))
+      const users = await userService.findMany(query);
+  
       sendSuccessResponse(
         res,
         next,
         {
           success: true,
-          response: { invoice },
+          response: { ...users },
         }
       );
     } catch (error) {
@@ -52,8 +39,8 @@ import { invoiceService } from "../../services/invoice";
   
   export default {
     method: "get",
-    url: "/api/:invoiceId",
-    handler: getSingleInvoice,
+    url: "/api/users",
+    handler: getUsers,
     data,
   };
   

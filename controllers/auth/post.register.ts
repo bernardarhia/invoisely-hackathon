@@ -39,7 +39,7 @@ const data: IData = {
       },
       role: {
         required: true,
-        authorize: ({}, role: UserRole)=> role === "admin"
+        authorize: ({}, role: UserRole) => role === "admin"
       },
     },
   },

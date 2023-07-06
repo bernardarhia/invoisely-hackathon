@@ -99,8 +99,8 @@ export abstract class BaseService<T> implements IService<T> {
     ).toObject();
   }
 
-  async updateMany(filter: FilterQuery<T>, update: any): Promise<void> {
-    await this.model.updateMany(filter, update).exec();
+  async updateMany(filter: FilterQuery<T>, update: any): Promise<any> {
+    return await this.model.updateMany(filter, update, {new: true}).exec();
   }
   async countDocument(filter: FilterQuery<T>): Promise<number> {
     return await this.model.countDocuments(filter);

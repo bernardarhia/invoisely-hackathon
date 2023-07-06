@@ -18,13 +18,6 @@ const userSchema = new mongoose.Schema<UserModel>(
     role: { type: String, default: "admin", enum: userRoles },
     firstName: { type: String },
     lastName: { type: String },
-    physicalAddress: {
-      houseNumber: { type: String },
-      zipCode: { type: String },
-      city: { type: String },
-      state: { type: String },
-      street: { type: String },
-    },
     mailingAddress: {
       houseNumber: { type: String },
       zipCode: { type: String },
@@ -32,8 +25,7 @@ const userSchema = new mongoose.Schema<UserModel>(
       state: { type: String },
       street: { type: String },
     },
-    status: { type: String, default: "pendingApproval" },
-    isLoggedIn: { type: Boolean },
+    status: { type: String, default: "active" },
     createdBy: {
       type: String,
       ref: "User",

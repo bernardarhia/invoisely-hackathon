@@ -16,12 +16,12 @@ import { IData } from "../../interfaces/index";
 import { NextFunction, Response } from "express";
 import { invoiceService } from "../../services/invoice";
 import { Invoice, InvoiceDiscountType, RecurringFrequency, recurringFrequencies } from "../../database/models/Invoice";
-import { adminCanCreateInvoiceForUser, hasValidInvoiceDiscount, hasValidInvoiceItems } from "../../services/invoice/utils";
-import { userService } from "../../services/users";
-import { isAfter, isToday } from "date-fns";
+import { canAccessInvoice, hasValidInvoiceDiscount, hasValidInvoiceItems } from "../../services/invoice/utils";
+import { isAfter, isToday, parseISO } from "date-fns";
 import { httpCodes } from "../../constants";
 
 const data: IData<Invoice> = {
+  permittedRoles: ["admin"],
   requireAuth: true,
   rules: {
     body: {
@@ -35,13 +35,13 @@ const data: IData<Invoice> = {
       },
       recurringStartDate: {
         required: false,
-        validate: ({ }, recurringStartDate: Date) => 
-         !(recurringStartDate && isToday(recurringStartDate) || isAfter(new Date(), recurringStartDate))
+        validate: ({ }, recurringStartDate: string) => 
+         !(recurringStartDate && isToday(parseISO(recurringStartDate)) || isAfter(new Date(), parseISO(recurringStartDate)))
       },
       recurringEndDate: {
         required: false,
-        validate: ({ }, recurringEndDate: Date) => 
-        !(recurringEndDate && isToday(recurringEndDate) || isAfter(new Date(), recurringEndDate))
+        validate: ({ }, recurringEndDate: string) => 
+        !(recurringEndDate && isToday(parseISO(recurringEndDate)) || isAfter(new Date(), parseISO(recurringEndDate)))
       },
       recurringFrequency: {
         required: false,
@@ -56,7 +56,7 @@ const data: IData<Invoice> = {
       },
       userId: {
         required: true,
-        authorize: async (req: AuthRequest, userId: string) => await adminCanCreateInvoiceForUser(req, userId)
+        authorize: async (req: AuthRequest, userId: string) => await canAccessInvoice(req, userId)
       }
     },
   },
