@@ -30,7 +30,6 @@ export interface IUser {
   role: UserRole;
   firstName: string;
   lastName: string;
-  physicalAddress?: IAddress;
   mailingAddress?: IAddress;
   status: UserStatus;
   deleted: boolean;

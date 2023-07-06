@@ -7,7 +7,6 @@ Before installing the project, make sure you have the following installed on you
 
 * [Nodejs](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)  ^14
 * [Mongodb](https://www.mongodb.com/docs/manual/installation/)
-* [Redis Server](https://redis.io/docs/getting-started/installation/)
 
 
 ## Folder Structure
@@ -19,11 +18,9 @@ controllers  | This folder has the functionality and controls the api behaviour
 core  | All app base setup can be found here. It has database connection, Job configurations and server configurations
 helpers  | All helper functions for base app is here
 interfaces  | Almost all interfaces for the app variables and services are here
-jobs  | Contains scheduled tasks and jobs
 middleware  | This folder contains the middleware for security and authentication
 database  | Database schemas and hooks are here
 services  | Database manipulation can be found here
-templates  | Contains email templates
 tests  | All tests files are here
 utils  | Contains utility functions
 

@@ -12,6 +12,7 @@ import {
 import { buildUpdatePayload } from "../../utils";
   
   const data: IData<Invoice> = {
+    permittedRoles: ["admin"],
     requireAuth: true,
     rules: {
       body: {
@@ -44,7 +45,7 @@ import { buildUpdatePayload } from "../../utils";
       },
     },
   };
-  async function createSingleInvoice(
+  async function updateInvoice(
     req: AuthRequest<Invoice>,
     res: Response,
     next: NextFunction,
@@ -54,6 +55,9 @@ import { buildUpdatePayload } from "../../utils";
         ...req.body,
         createdBy: req.user.id,
       };
+      
+      delete body.deleted;
+
       const invoiceId = req.params.invoiceId;
       const buildInvoiceUpdateFields = buildUpdatePayload(req.body)
       const updatedInvoice = await invoiceService.updateOne({_id: invoiceId}, buildInvoiceUpdateFields)
@@ -74,9 +78,9 @@ import { buildUpdatePayload } from "../../utils";
   }
   
   export default {
-    method: "post",
-    url: "/api/invoices/create",
-    handler: createSingleInvoice,
+    method: "put",
+    url: "/api/:invoiceId/invoices/update",
+    handler: updateInvoice,
     data,
   };
   

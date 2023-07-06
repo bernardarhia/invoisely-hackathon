@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import { ValidationRule } from "../helpers/validator";
+import { UserRole } from "./users";
 
 export type RouteTypes = "post" | "get" | "delete" | "put" | "patch";
 
@@ -14,6 +15,7 @@ export interface IRequestHeader {
   value: string;
 }
 export interface IData<T = any> {
+  permittedRoles?: UserRole[],
   middleware?: RequestHandler[];
   requireAuth?: boolean;
   customAuth?: RequestHandler;

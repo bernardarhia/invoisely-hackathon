@@ -2,6 +2,7 @@ import { isNumber } from "lodash";
 import { InvoiceDiscountType, InvoiceItem } from "../../database/models/Invoice";
 import { AuthRequest } from "../../middleware";
 import { userService } from "../users";
+import { invoiceService } from ".";
 
 
 export const hasValidInvoiceItems = ({ }, invoiceItems: InvoiceItem[]) => {
@@ -17,7 +18,12 @@ export const hasValidInvoiceDiscount = ({ }, val: { amount: number, type: Invoic
     return val.amount && ["percentage", "number"].includes(val.type);
 }
 
-export const adminCanCreateInvoiceForUser = async (req: AuthRequest, userId: string)=>{
+export const canAccessInvoice = async (req: AuthRequest, userId: string)=>{
     const result  = (await userService.findOne({ _id: userId, createdBy: req.user.id }))
+    return !!result;
+}
+
+export const canDeleteInvoice = async(req:AuthRequest, invoiceId: string)=>{
+    const result  = (await invoiceService.findOne({ _id: invoiceId, createdBy: req.user.id }))
     return !!result;
 }

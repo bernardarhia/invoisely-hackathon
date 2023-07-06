@@ -43,13 +43,8 @@ const data: IData = {
         required: true,
         fieldName: "Last name",
       },
-      permission: {
-        required: true,
-      },
-      organizationId: {
-        required: true,
-      },
-      status: {},
+      mailingAddress: {},
+    
     },
     params: {
       userId: {},
