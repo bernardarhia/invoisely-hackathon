@@ -166,7 +166,6 @@ export class App implements HttpServer {
     this.app.use(bodyParser.urlencoded({ extended: false, limit: "50kb" }));
     this.app.use(bodyParser.json());
         // set default security settings
-        this.app.use(helmet());
         this.app.use(helmet.contentSecurityPolicy({
           directives: {
             defaultSrc: ["'self'"],
@@ -184,6 +183,8 @@ export class App implements HttpServer {
           }
         }))
         this.app.use(helmet.frameguard({ action: 'sameorigin' }));
+        this.app.use(helmet());
+
     // use express-mongo-sanitize
     this.app.use(
       mongoSanitize({
