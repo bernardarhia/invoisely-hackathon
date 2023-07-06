@@ -34,7 +34,7 @@ npm install
 ## setting up mongodb
 download mongodb compass from the mongodb official site [Download](https://www.mongodb.com/docs/manual/installation/)
 
-- Create .env file in your root directory and copy the content of the .env.example to to the .env to Generate API Key
+- Create .env file in your root directory and copy the content of the .env.example to to the .env
 
 ## Starting the app
 ```bash
