@@ -165,25 +165,7 @@ export class App implements HttpServer {
     this.app.use(compression());
     this.app.use(bodyParser.urlencoded({ extended: false, limit: "50kb" }));
     this.app.use(bodyParser.json());
-        // set default security settings
-        // this.app.use(helmet.contentSecurityPolicy({
-        //   directives: {
-        //     defaultSrc: ["'self'"],
-        //     scriptSrc: ["'self'", MAIN_ORIGIN],
-        //     styleSrc: ["'self'", MAIN_ORIGIN],
-        //     imgSrc: ["'self'", MAIN_ORIGIN],
-        //   },
-        // }));
-    
-        // // ALLOW CLIENTS TO ACCESS API USING HTTPS
-        // this.app.use(helmet({
-        //   hsts: {
-        //     maxAge: 31536000, // 1 year in seconds
-        //     includeSubDomains: true
-        //   }
-        // }))
-        // this.app.use(helmet.frameguard({ action: 'sameorigin' }));
-        this.app.use(helmet());
+    this.app.use(helmet());
 
     // use express-mongo-sanitize
     this.app.use(
@@ -196,40 +178,9 @@ export class App implements HttpServer {
         },
       }),
     );
-    // use xss
-    this.app.use((req, res, next) => {
-      res.setHeader('X-Frame-Options', 'DENY');
-      const allowedRoutes = [];
-      const currentRoute = req.url;
-      if (!allowedRoutes.includes(currentRoute)) {
-        xss(req, res, next);
-      }
-      next();
-    });
-    // use hpp to prevent Parameter Pollution attacks
-    this.app.use(hpp());
 
-    // set default security settings
-    this.app.use(helmet());
-
-    this.app.use(helmet.contentSecurityPolicy({
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", MAIN_ORIGIN],
-        styleSrc: ["'self'", MAIN_ORIGIN],
-        imgSrc: ["'self'", MAIN_ORIGIN],
-      },
-    }));
-
-    // ALLOW CLIENTS TO ACCESS API USING HTTPS
-    this.app.use(helmet({
-      hsts: {
-        maxAge: 31536000, // 1 year in seconds
-        includeSubDomains: true
-      }
-    }))
     this.app.use((req: Request, res: Response, next: NextFunction) => {
-      if (process.env.NODE_ENV !== "test") {
+      if (["development", "testing"].includes(process.env.NODE_ENV)) {
         console.debug({
           headers: req.headers,
           host: req.hostname,
@@ -244,6 +195,11 @@ export class App implements HttpServer {
       }
       next();
     });
+    this.app.use((req, res, next) => {
+      req.headers.accept = 'application/json';
+      next();
+    });
+    
     this.app.use(this.router);
     this.app.all("*", (req, res, next) => {
       res.status(404).send("Route not found");
