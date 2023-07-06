@@ -30,7 +30,7 @@ async function checkAuthHandler(
   try {
     const user = req.user;
 
-    if (!user) return next(new AppError(401, "Unauthorized 2"));
+    if (!user) return next(new AppError(401, "Unauthorized"));
 
     const authUser = await userService.findOne(
       { _id: user.id, deleted: false },

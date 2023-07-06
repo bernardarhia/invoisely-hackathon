@@ -3,8 +3,8 @@ import {
     sendSuccessResponse,
   } from "../../helpers/requestResponse";
   import { AuthRequest } from "../../middleware";
-import { invoiceService } from "../../services/invoice";
-import { canDeleteInvoice } from "../../services/invoice/utils";
+import { canDeleteUser } from "../../services/users/utils";
+import { userService } from "../../services/users";
   import { IData } from "./../../interfaces/index";
   import { NextFunction, Response } from "express";
   
@@ -13,24 +13,23 @@ import { canDeleteInvoice } from "../../services/invoice/utils";
     requireAuth: true,
     rules: {
       params: {
-        invoiceId: {
+        userId: {
           required: true,
-          authorize: async (req: AuthRequest, invoiceId: string) => await canDeleteInvoice(req, invoiceId)
+          authorize: async (req: AuthRequest, userId: string) => await canDeleteUser(req, userId)
         },
       }
     },
   };
-  async function deleteSingleInvoice(
+  async function deleteSingleUser(
     req: AuthRequest,
     res: Response,
     next: NextFunction,
   ) {
     try {
-      const invoiceId = req.params.invoiceId;
+      const userId = req.params.userId;
           
-      const deletedInvoice = await invoiceService.updateOne({ _id: invoiceId },{ deleted: true });
+      const deletedInvoice = await userService.updateOne({ _id: userId },{ deleted: true });
       
-      if(deletedInvoice && !deletedInvoice.deleted){}
       sendSuccessResponse(
         res,
         next,
@@ -46,8 +45,8 @@ import { canDeleteInvoice } from "../../services/invoice/utils";
   
   export default {
     method: "delete",
-    url: "/api/:invoiceId/delete",
-    handler: deleteSingleInvoice,
+    url: "/api/:userId/delete",
+    handler: deleteSingleUser,
     data,
   };
   

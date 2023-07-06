@@ -22,7 +22,7 @@ import helmet from "helmet";
 import bodyParser from "body-parser";
 import { getRoutes } from "../controllers";
 import authMiddleware, { AuthRequest } from "../middleware";
-import { ErrorHandler } from "../helpers/errors";
+import { AppError, ErrorHandler } from "../helpers/errors";
 import { isFunction } from "lodash";
 import { Validator } from "../helpers/validator";
 import { hasCorrectHttpVerb } from "../utils";
@@ -85,6 +85,18 @@ export class App implements HttpServer {
           if (data && data.requireAuth) {
             await authMiddleware.checkAuth(req, res, next);
           } else next();
+        },
+
+        async function permittedRolesMiddleware(
+          req: AuthRequest,
+          res: Response,
+          next: NextFunction
+        ): Promise<void> {
+          if(data && data.permittedRoles && data.permittedRoles.length){
+            if(!data.permittedRoles.includes(req.user.role)) return next(new AppError(403, "Forbidden"));
+            return next();
+          }
+          else next();
         },
         Validator.validateRequestBody(reqBody),
         Validator.validateRequestParams(reqParams),

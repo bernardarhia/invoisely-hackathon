@@ -3,40 +3,36 @@ import {
     sendSuccessResponse,
   } from "../../helpers/requestResponse";
   import { AuthRequest } from "../../middleware";
-import { invoiceService } from "../../services/invoice";
-import { canDeleteInvoice } from "../../services/invoice/utils";
+import { userService } from "../../services/users";
   import { IData } from "./../../interfaces/index";
   import { NextFunction, Response } from "express";
   
   const data: IData = {
-    permittedRoles: ["admin"],
+    permittedRoles: ["admin", "client"],
     requireAuth: true,
     rules: {
       params: {
-        invoiceId: {
+        userId: {
           required: true,
-          authorize: async (req: AuthRequest, invoiceId: string) => await canDeleteInvoice(req, invoiceId)
         },
       }
     },
   };
-  async function deleteSingleInvoice(
+  async function getSingleUser(
     req: AuthRequest,
     res: Response,
     next: NextFunction,
   ) {
     try {
-      const invoiceId = req.params.invoiceId;
-          
-      const deletedInvoice = await invoiceService.updateOne({ _id: invoiceId },{ deleted: true });
+      const userId = req.params.userId;
+      const user = await userService.findOne({_id: userId, deleted: false});
       
-      if(deletedInvoice && !deletedInvoice.deleted){}
       sendSuccessResponse(
         res,
         next,
         {
           success: true,
-          response: { ...deletedInvoice },
+          response: { ...user },
         }
       );
     } catch (error) {
@@ -45,9 +41,9 @@ import { canDeleteInvoice } from "../../services/invoice/utils";
   }
   
   export default {
-    method: "delete",
-    url: "/api/:invoiceId/delete",
-    handler: deleteSingleInvoice,
+    method: "get",
+    url: "/api/:userId/users",
+    handler: getSingleUser,
     data,
   };
   

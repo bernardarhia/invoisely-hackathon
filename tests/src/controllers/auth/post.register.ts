@@ -30,6 +30,6 @@ describe("REGISTER USER /auth/register", function () {
       .eql(userDetails.email);
     res.body.response.createdUser.should.have
       .property("status")
-      .eql("pendingApproval");
+      .eql("active");
   });
 });

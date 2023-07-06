@@ -8,6 +8,7 @@ import { IData } from "./../../interfaces/index";
 import { NextFunction, Response } from "express";
 
 const data: IData = {
+  permittedRoles: ["admin"],
   requireAuth: true 
 };
 async function deleteInvoices(
@@ -24,7 +25,7 @@ async function deleteInvoices(
       next,
       {
         success: true,
-        response: { deletedInvoices },
+        response: { ...deletedInvoices },
       }
     );
   } catch (error) {

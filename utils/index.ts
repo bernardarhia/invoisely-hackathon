@@ -4,7 +4,7 @@ import { RouteTypes } from "./../interfaces/index";
 import { Request } from "express";
 export function hasCorrectHttpVerb(httpVerb: RouteTypes): boolean | void {
   if (!["post", "get", "put", "delete"].includes(httpVerb)) {
-    new AppError(500, "Invalid http method");
+     new AppError(500, "Invalid http method");
   }
   return true;
 }
@@ -85,11 +85,4 @@ export const buildUpdatePayload = (data: Record<string, any>) => {
   }, {});
 
   return filteredData;
-};
-
-export const getRandomId = (min = 0, max = 500000) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  const num = Math.floor(Math.random() * (max - min + 1)) + min;
-  return num.toString().padStart(6, "0");
 };

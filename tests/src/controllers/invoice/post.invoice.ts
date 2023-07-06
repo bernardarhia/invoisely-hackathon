@@ -14,9 +14,10 @@ chai.use(chaiAsPromise);
 chai.use(chaiHttp);
 chai.should();
 
-describe.only("CREATE INVOICE /invoices/create", function () {
+describe("CREATE INVOICE /invoices/create", function () {
     const dummyKey = uuid();
     const dummyKey2 = uuid();
+    const dummyKey3 = uuid()
     const invoice: Invoice = {
         items: [
             {
@@ -31,6 +32,7 @@ describe.only("CREATE INVOICE /invoices/create", function () {
     before(async () => {
         await mockUser.create({ dummyKey, role: "admin" })
         await mockUser.create({ dummyKey: dummyKey2, role: "client", createdBy: (mockUser.getId(dummyKey)) })
+        await mockUser.create({ dummyKey: dummyKey3, role: "client", createdBy: uuid() })
     })
 
     for (const field of Object.keys(invoice)) {
@@ -45,6 +47,18 @@ describe.only("CREATE INVOICE /invoices/create", function () {
             res.status.should.be.a("number").eql(httpCodes.BAD_REQUEST.code)
         });
     }
+    it(`should not create invoice user admin didn't create`, async function () {
+        const res = await chai
+            .request(app.app)
+            .post("/api/invoices/create")
+            .set({
+                Authorization: `Bearer ${mockUser.getToken(dummyKey)}`,
+            })
+            .send({ ...invoice, userId: mockUser.getId(dummyKey3) });
+
+        res.status.should.be.a("number").eql(400)
+        res.body.should.have.property("error").eql(true)
+    });
     it(`should create invoice without non required fields`, async function () {
         const res = await chai
             .request(app.app)
