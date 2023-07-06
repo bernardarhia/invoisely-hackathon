@@ -1,9 +1,42 @@
 /**
- * @api {get} /api/auth/refresh Get refresh token
- * @apiName GETRefreshToken
+ * @api {GET} /api/auth/refresh Refresh
+ * @apiName REFRESH
  * @apiGroup Auth
- *
+ * @apiVersion 0.0.1
+ * @apiDescription Endpoint use to login a user 
+ * @apiSuccess {Boolean} success Request success
+ * @apiSuccess {Object} response User Data
+ * @apiPermission anyone
+ * @apiSampleRequest https://callin.onrender.com
+ * @apiSuccessExample {json}
+    Success-Response:
+ *  HTTP/1.1 200 CREATED
+ * {
+    "success": true,
+    "response": {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo",
+        "user": {
+            "email": "Joyce_Spencer@yahoo.com",
+            "phone": {},
+            "role": "admin",
+            "mailingAddress": {},
+            "status": "active",
+            "deleted": false,
+            "createdAt": "2023-06-29T03:13:39.052Z",
+            "updatedAt": "2023-06-29T03:13:39.052Z",
+            "id": "649cf6e35ea0594996d36ba6"
+        }
+    }
+}
  * 
+ * @apiErrorExample {json}
+ * Error-Response:
+ * HTTP/1.1 403 FORBIDDEN
+ * {
+ *  "error":true,
+ *  "message": "Forbidden"
+ *  
+ * }
  */
 
 import { assert } from "../../helpers/asserts";
@@ -36,7 +69,7 @@ async function refreshTokenHandler(
     if (!token) return next(new AppError(403, "Forbidden"));
 
     const verifyToken = TokenService.verifyRefreshToken(refreshToken);
-    assert(!!verifyToken, "Forbidden 2");
+    assert(!!verifyToken, "Forbidden");
 
     const user = await userService.findOne(
       { _id: token.userId },

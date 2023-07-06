@@ -19,7 +19,7 @@
         "token": {
             "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo"
         },
-        "createdUser": {
+        "user": {
             "email": "Joyce_Spencer@yahoo.com",
             "phone": {},
             "role": "admin",
@@ -33,7 +33,7 @@
     }
 }
  * 
- * @apiError FieldRequired Email is required
+ * @apiError InputField Email is required
  * @apiErrorExample {json}
  * Error-Response:
  * HTTP/1.1 400 BAD REQUEST
