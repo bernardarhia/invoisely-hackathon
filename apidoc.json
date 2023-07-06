@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "INVOISELY DOCUMENTATION",
   "title": "My API Documentation",
-  "url": "https://myapi.com",
-  "sampleUrl": "https://myapi.com",
+  "url": "https://invoisely.onrender.com",
+  "sampleUrl": "https://invoisely.onrender.com",
   "header": {
     "title": "INvoisely",
     "content": "This is an api documentation for INVOISELY"

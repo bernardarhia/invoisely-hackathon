@@ -1,7 +1,7 @@
 
 
 /**
- * @api {GET} /api/invoices Get
+ * @api {GET} /api/invoices Get All
  * @apiName Get Invoices
  * @apiGroup Invoice
  * @apiVersion 0.0.1

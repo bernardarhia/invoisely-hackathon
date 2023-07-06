@@ -8,7 +8,7 @@
  * @apiDescription Endpoint use to get a single invoice 
  * @apiSuccess {Boolean} success Request success
  * @apiSuccess {Object} response Invoice Data
- * @apiPermission admin
+ * @apiPermission admin, user
  * @apiSampleRequest https://invoisely.onrender.com
  * @apiParam {String} invoiceId The Invoice Id.
  * @apiSuccessExample {json}

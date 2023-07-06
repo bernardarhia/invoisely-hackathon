@@ -34,7 +34,7 @@
     }
 }
  * 
- * @apiError InputField Email is required
+ * @apiError InputField is required
  * @apiErrorExample {json}
  * Error-Response:
  * HTTP/1.1 400 BAD REQUEST

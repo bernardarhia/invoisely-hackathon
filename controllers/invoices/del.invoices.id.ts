@@ -1,6 +1,6 @@
 
 /**
- * @api {DELETE} /api/:invoiceId/delete Delete
+ * @api {DELETE} /api/:invoiceId/invoices/delete Delete
  * @apiName Delete Invoice
  * @apiGroup Invoice
  * @apiVersion 0.0.1
@@ -21,7 +21,7 @@
 }
  * 
  * @apiError InvoiceIdRequired
- * @apiError Unauthorized   You cannot access this route.
+ * @apiError Unauthorized You cannot access this route.
  * @apiErrorExample {json}
  * Error-Response:
  * HTTP/1.1 400 BAD REQUEST
@@ -81,7 +81,7 @@ import { canDeleteInvoice } from "../../services/invoice/utils";
   
   export default {
     method: "delete",
-    url: "/api/:invoiceId/delete",
+    url: "/api/:invoiceId/invoices/delete",
     handler: deleteSingleInvoice,
     data,
   };

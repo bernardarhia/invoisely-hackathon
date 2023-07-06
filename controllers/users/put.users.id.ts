@@ -1,3 +1,50 @@
+
+
+/**
+ * @api {POST} /api/users/create Update
+ * @apiName Update User
+ * @apiGroup Users
+ * @apiVersion 0.0.1
+ * @apiDescription Endpoint use to update a user
+ * @apiSuccess {Boolean} success Request success
+ * @apiSuccess {Object} response User Data
+ * @apiPermission admin
+ * @apiSampleRequest https://invoisely.onrender.com
+ * @apiBody {String} firstName First name of the user
+ * @apiBody {String} lastName Last name of the user
+ * @apiBody {String} email  User's email
+ * @apiBody {String} password  User's Password
+ * @apiBody {Object} phone  User's phone 
+ * @apiBody {Object} mailAddress  mailingAddress of the user
+ * @apiBody {String} role  User's role
+ * @apiSuccessExample {json}
+    Success-Response:
+ *  HTTP/1.1 200 OK
+ * {
+    "success": true,
+    "response": {
+            "email": "Joyce_Spencer@yahoo.com",
+            "phone": {},
+            "role": "admin",
+            "mailingAddress": {},
+            "status": "active",
+            "deleted": false,
+            "createdAt": "2023-06-29T03:13:39.052Z",
+            "updatedAt": "2023-06-29T03:13:39.052Z",
+            "id": "537fcf0d-6467-49c0-a287-be80dcd779e0"    
+}
+ * 
+ * @apiError InputField is required
+ * @apiErrorExample {json}
+ * Error-Response:
+ * HTTP/1.1 400 BAD REQUEST
+ * {
+ *  "success":false,
+ *  "response":{
+ *    "message": "{Field} Required"
+ *  }
+ * }
+ */
 import {
   sendFailedResponse,
   sendSuccessResponse,
