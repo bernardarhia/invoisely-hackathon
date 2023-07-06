@@ -1,7 +1,7 @@
 
 
 /**
- * @api {GET} /api/users Get All
+ * @api {GET} /v1/users Get All
  * @apiName Get Users
  * @apiGroup Users
  * @apiVersion 0.0.1
@@ -10,6 +10,10 @@
  * @apiSuccess {Object} response Users Data
  * @apiPermission admin
  * @apiSampleRequest https://invoisely.onrender.com
+ *  * @apiHeader {String} Authorization The token can be generated from your user profile.
+ * @apiHeaderExample {Header} Header-Example
+ *     "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo"
+ *
  * @apiSuccessExample {json}
     Success-Response:
  *  HTTP/1.1 200 OK
@@ -82,7 +86,7 @@ import { queryBuilder } from "../../utils";
   
   export default {
     method: "get",
-    url: "/api/users",
+    url: "/users",
     handler: getUsers,
     data,
   };

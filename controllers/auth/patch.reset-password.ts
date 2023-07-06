@@ -1,5 +1,5 @@
 /**
- * @api {PATCHJ} /api/auth/reset-password Password Reset
+ * @api {PATCH} /v1/auth/reset-password Password Reset
  * @apiName PasswordReset
  * @apiGroup Auth
  * @apiVersion 0.0.1
@@ -117,7 +117,7 @@ async function resetPasswordHandler(
 
 export default {
   method: "patch",
-  url: "/api/auth/reset-password",
+  url: "/auth/reset-password",
   handler: resetPasswordHandler,
   data,
 };

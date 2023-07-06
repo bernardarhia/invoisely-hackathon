@@ -1,7 +1,7 @@
 
 
 /**
- * @api {POST} /api/users/create Create
+ * @api {POST} /v1/users/create Create
  * @apiName Create User
  * @apiGroup Users
  * @apiVersion 0.0.1
@@ -10,6 +10,10 @@
  * @apiSuccess {Object} response User Data
  * @apiPermission admin
  * @apiSampleRequest https://invoisely.onrender.com
+ *  * @apiHeader {String} Authorization The token can be generated from your user profile.
+ * @apiHeaderExample {Header} Header-Example
+ *     "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo"
+ *
  * @apiBody {String} firstName First name of the user
  * @apiBody {String} lastName Last name of the user
  * @apiBody {String} email  User's email
@@ -123,7 +127,7 @@ async function createSingleHandler(
 
 export default {
   method: "post",
-  url: "/api/users/create",
+  url: "/users/create",
   handler: createSingleHandler,
   data,
 };

@@ -39,7 +39,7 @@ describe("CREATE INVOICE /invoices/create", function () {
         it(`should not create invoice without ${field}`, async function () {
             const res = await chai
                 .request(app.app)
-                .post("/api/invoices/create")
+                .post("/v1/invoices/create")
                 .set({
                     Authorization: `Bearer ${mockUser.getToken(dummyKey)}`,
                 })
@@ -50,7 +50,7 @@ describe("CREATE INVOICE /invoices/create", function () {
     it(`should not create invoice user admin didn't create`, async function () {
         const res = await chai
             .request(app.app)
-            .post("/api/invoices/create")
+            .post("/v1/invoices/create")
             .set({
                 Authorization: `Bearer ${mockUser.getToken(dummyKey)}`,
             })
@@ -62,7 +62,7 @@ describe("CREATE INVOICE /invoices/create", function () {
     it(`should create invoice without non required fields`, async function () {
         const res = await chai
             .request(app.app)
-            .post("/api/invoices/create")
+            .post("/v1/invoices/create")
             .set({
                 Authorization: `Bearer ${mockUser.getToken(dummyKey)}`,
             })
@@ -83,7 +83,7 @@ describe("CREATE INVOICE /invoices/create", function () {
     it(`should create invoice with discount as ${discountTypes.type}`, async function () {
         const res = await chai
             .request(app.app)
-            .post("/api/invoices/create")
+            .post("/v1/invoices/create")
             .set({
                 Authorization: `Bearer ${mockUser.getToken(dummyKey)}`,
             })
@@ -91,7 +91,6 @@ describe("CREATE INVOICE /invoices/create", function () {
                 ...invoice, userId: mockUser.getId(dummyKey2),
                 discount: { type: discountTypes.type, amount: discountTypes.amount }
             });
-console.log(res.body.response)
         res.status.should.be.a("number").eql(201)
         res.body.should.have.property("success").eql(true)
         res.body.should.have.property("response").should.be.a("object")

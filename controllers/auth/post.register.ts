@@ -1,5 +1,5 @@
 /**
- * @api {POST} /api/auth/register Register
+ * @api {POST} /v1/auth/register Register
  * @apiName Register
  * @apiGroup Auth
  * @apiVersion 0.0.1
@@ -136,7 +136,7 @@ async function registerHandler(
 
 export default {
   method: "post",
-  url: "/api/auth/register",
+  url: "/auth/register",
   handler: registerHandler,
   data,
 };

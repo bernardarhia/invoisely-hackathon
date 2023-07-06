@@ -1,5 +1,5 @@
 /**
- * @api {POST} /api/auth/login Login
+ * @api {POST} /v1/auth/login Login
  * @apiName Login
  * @apiGroup Auth
  * @apiVersion 0.0.1
@@ -111,7 +111,7 @@ async function loginHandler(req: Request, res: Response, next: NextFunction) {
 
 export default {
   method: "post",
-  url: "/api/auth/login",
+  url: "/auth/login",
   handler: loginHandler,
   data,
 };

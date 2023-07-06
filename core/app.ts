@@ -31,7 +31,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
 import trebble from '@treblle/express'
 import { RATE_LIMITS } from "../constants";
-const { MAIN_ORIGIN = "" } = process.env;
+const { MAIN_ORIGIN = "", APP_VERSION="v1" } = process.env;
 export class App implements HttpServer {
   public app: Application;
   private router: Router;
@@ -56,7 +56,7 @@ export class App implements HttpServer {
       dataExists && data.rules && data.rules.query ? data.rules.query : {};
 
     this.router[method](
-      url,
+      `/${APP_VERSION}${url}`,
       [
         async function checkRequestLimit(
           req: Request,
@@ -165,7 +165,11 @@ export class App implements HttpServer {
     this.app.use(compression());
     this.app.use(bodyParser.urlencoded({ extended: false, limit: "50kb" }));
     this.app.use(bodyParser.json());
-    this.app.use(helmet());
+    this.app.use(helmet(
+      {
+        'xFrameOptions': { action: 'deny' }
+      }
+    ));
 
     // use express-mongo-sanitize
     this.app.use(
@@ -202,7 +206,7 @@ export class App implements HttpServer {
     
     this.app.use(this.router);
     this.app.all("*", (req, res, next) => {
-      res.status(404).send("Route not found");
+      res.status(405).send("Route not allowed");
       next();
     });
     this.app.use(ErrorHandler.handle);

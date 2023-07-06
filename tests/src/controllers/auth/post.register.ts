@@ -16,7 +16,7 @@ describe("REGISTER USER /auth/register", function () {
   it("should register user", async function () {
     const res = await chai
       .request(app.app)
-      .post("/api/auth/register")
+      .post("/v1/auth/register")
       .send(userDetails);
     res.should.have.status(201);
     res.body.should.have.property("success").equal(true);

@@ -1,5 +1,5 @@
 /**
- * @api {GET} /api/auth Auth
+ * @api {GET} /v1/auth Auth
  * @apiName AUTH
  * @apiGroup Auth
  * @apiVersion 0.0.1
@@ -91,7 +91,7 @@ async function checkAuthHandler(
 
 export default {
   method: "get",
-  url: "/api/auth",
+  url: "/auth",
   handler: checkAuthHandler,
   data,
 };

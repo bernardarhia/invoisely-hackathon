@@ -1,5 +1,5 @@
 /**
- * @api {GET} /api/auth/refresh Refresh
+ * @api {GET} /v1/auth/refresh Refresh
  * @apiName REFRESH
  * @apiGroup Auth
  * @apiVersion 0.0.1
@@ -99,7 +99,7 @@ async function refreshTokenHandler(
 
 export default {
   method: "get",
-  url: "/api/auth/refresh",
+  url: "/auth/refresh",
   handler: refreshTokenHandler,
   data,
 };

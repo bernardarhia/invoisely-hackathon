@@ -1,6 +1,6 @@
 
 /**
- * @api {DELETE} /api/invoices/delete Delete All
+ * @api {DELETE} /v1/invoices/delete Delete All
  * @apiName Delete Invoices
  * @apiGroup Invoice
  * @apiVersion 0.0.1
@@ -9,6 +9,10 @@
  * @apiSuccess {Object} response Data
  * @apiPermission admin
  * @apiSampleRequest https://invoisely.onrender.com
+ *  * @apiHeader {String} Authorization The token can be generated from your user profile.
+ * @apiHeaderExample {Header} Header-Example
+ *     "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo"
+ *
  * @apiSuccessExample {json}
     Success-Response:
  *  HTTP/1.1 200 OK
@@ -67,7 +71,7 @@ async function deleteInvoices(
 
 export default {
   method: "delete",
-  url: "/api/invoices/delete",
+  url: "/invoices/delete",
   handler: deleteInvoices,
   data,
 };

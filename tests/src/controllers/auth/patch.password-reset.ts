@@ -20,7 +20,7 @@ describe("RESET PASSWORD /auth/reset-password", function () {
   it("should change user password", async function () {
     const res = await chai
       .request(app.app)
-      .patch("/api/auth/reset-password")
+      .patch("/v1/auth/reset-password")
       .set({
         Authorization: `Bearer ${mockUser.getToken(dummyKey)}`,
       })

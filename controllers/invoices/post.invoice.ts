@@ -1,6 +1,6 @@
 
 /**
- * @api {POST} /api/invoices/create Create
+ * @api {POST} /v1/invoices/create Create
  * @apiName Create Invoice
  * @apiGroup Invoice
  * @apiVersion 0.0.1
@@ -9,6 +9,10 @@
  * @apiSuccess {Object} response Invoice Data
  * @apiPermission admin
  * @apiSampleRequest https://invoisely.onrender.com
+ *  * @apiHeader {String} Authorization The token can be generated from your user profile.
+ * @apiHeaderExample {Header} Header-Example
+ *     "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo"
+ *
  * @apiBody {Array} items invoice items
  * @apiBody {String} userId The user this invoice is for
  * @apiBody {Object} discount  Discount to the invoice
@@ -139,7 +143,7 @@ async function createSingleInvoice(
 
 export default {
   method: "post",
-  url: "/api/invoices/create",
+  url: "/invoices/create",
   handler: createSingleInvoice,
   data,
 };

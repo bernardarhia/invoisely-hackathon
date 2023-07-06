@@ -1,5 +1,5 @@
 /**
- * @api {GET} /api/:userId/users Get
+ * @api {GET} /v1/:userId/users Get
  * @apiName Get User
  * @apiGroup Users
  * @apiVersion 0.0.1
@@ -8,6 +8,10 @@
  * @apiSuccess {Object} response User Data
  * @apiPermission admin
  * @apiSampleRequest https://invoisely.onrender.com
+ *  * @apiHeader {String} Authorization The token can be generated from your user profile.
+ * @apiHeaderExample {Header} Header-Example
+ *     "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDljZjZlMzVlYTA1OTQ5OTZkMzZiYTYiLCJpYXQiOjE2ODgwMDg0MTksImV4cCI6MzM3NjAxNjg0NX0.dE-A_Snj93z67VbL_aoxeowif6CQQr6gTRO8ve_Fuuo"
+ *
  * @apiParam {String} userId The User's Id.
  * @apiSuccessExample {json}
     Success-Response:
@@ -87,7 +91,7 @@ import { userService } from "../../services/users";
   
   export default {
     method: "get",
-    url: "/api/:userId/users",
+    url: "/:userId/users",
     handler: getSingleUser,
     data,
   };
