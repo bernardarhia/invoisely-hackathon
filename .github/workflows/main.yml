@@ -1,4 +1,11 @@
-name: Api Test
+name: APi Test
+
+on: push # run this workflow on push events
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # specify the operating system for the job
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2 # check out the code from the repository
@@ -6,17 +13,17 @@ name: Api Test
       - name: Setup Node.js
         uses: actions/setup-node@v2 # set up Node.js for the job
         with:
-          node-version: '16.x'
+          node-version: '14.x'
 
       - name: Set environment variables
         env:
           APP_PORT: ${{ secrets.APP_PORT }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_REFRESH_TOKEN_SECRET: ${{ secrets.JWT_REFRESH_TOKEN_SECRET }}
           JWT_TOKEN_SECRET: ${{ secrets.JWT_TOKEN_SECRET }}
           PASSWORD_HASH: ${{ secrets.PASSWORD_HASH }}
           PASSWORD_SALT: ${{ secrets.PASSWORD_SALT }}
           ROOT_URI: ${{ secrets.ROOT_URI }}
-          
         run: |
           echo "APP_PORT=${APP_PORT}" >> $GITHUB_ENV
           echo "JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}" >> $GITHUB_ENV
@@ -27,7 +34,7 @@ name: Api Test
 
       - name: Install dependencies
         run: npm install # install dependencies from the project's package.json file
-
+        
       - name: Run tests
         run: |
           npm run build
