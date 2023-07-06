@@ -74,7 +74,7 @@ import { buildUpdatePayload } from "../../utils";
   }
   
   export default {
-    method: "post",
+    method: "put",
     url: "/api/invoices/create",
     handler: createSingleInvoice,
     data,
