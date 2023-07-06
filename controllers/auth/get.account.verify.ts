@@ -1,3 +1,10 @@
+/**
+ * @api {get} /api/account/verify Verify Account
+ * @apiName GETAuth
+ * @apiGroup Auth
+ *
+ * 
+ */
 import { IData } from "../../interfaces/index";
 import { NextFunction, Response } from "express";
 import {

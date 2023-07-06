@@ -1,3 +1,12 @@
+/**
+ * @api {post} /api/invoices/create Create Invoice
+ * @apiName Create Invoice
+ * @apiGroup Invoice
+ *
+ *
+ *
+ */
+
 import {
   sendFailedResponse,
   sendSuccessResponse,
