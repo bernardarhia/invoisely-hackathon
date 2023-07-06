@@ -166,23 +166,23 @@ export class App implements HttpServer {
     this.app.use(bodyParser.urlencoded({ extended: false, limit: "50kb" }));
     this.app.use(bodyParser.json());
         // set default security settings
-        this.app.use(helmet.contentSecurityPolicy({
-          directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", MAIN_ORIGIN],
-            styleSrc: ["'self'", MAIN_ORIGIN],
-            imgSrc: ["'self'", MAIN_ORIGIN],
-          },
-        }));
+        // this.app.use(helmet.contentSecurityPolicy({
+        //   directives: {
+        //     defaultSrc: ["'self'"],
+        //     scriptSrc: ["'self'", MAIN_ORIGIN],
+        //     styleSrc: ["'self'", MAIN_ORIGIN],
+        //     imgSrc: ["'self'", MAIN_ORIGIN],
+        //   },
+        // }));
     
-        // ALLOW CLIENTS TO ACCESS API USING HTTPS
-        this.app.use(helmet({
-          hsts: {
-            maxAge: 31536000, // 1 year in seconds
-            includeSubDomains: true
-          }
-        }))
-        this.app.use(helmet.frameguard({ action: 'sameorigin' }));
+        // // ALLOW CLIENTS TO ACCESS API USING HTTPS
+        // this.app.use(helmet({
+        //   hsts: {
+        //     maxAge: 31536000, // 1 year in seconds
+        //     includeSubDomains: true
+        //   }
+        // }))
+        // this.app.use(helmet.frameguard({ action: 'sameorigin' }));
         this.app.use(helmet());
 
     // use express-mongo-sanitize
