@@ -217,7 +217,7 @@ export class App implements HttpServer {
       }),
     );
     this.app.use(cookieParser());
-    if (["development", "testing"].includes(process.env.NODE_ENV)) {
+    if (!["development", "testing"].includes(process.env.NODE_ENV)) {
       this.app.use(trebble({
         apiKey: process.env.TREBLLE_API_KEY,
         projectId: process.env.TREBLLE_PROJECT_ID,
