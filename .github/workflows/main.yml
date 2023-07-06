@@ -1,7 +1,4 @@
 name: Api Test
-
-on:
-  push: # run this workflow on push events
     steps:
       - name: Checkout code
         uses: actions/checkout@v2 # check out the code from the repository
