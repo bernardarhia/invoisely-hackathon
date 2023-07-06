@@ -7,7 +7,7 @@
  * @apiSuccess {Boolean} success Request success
  * @apiSuccess {Object} response User Data
  * @apiPermission anyone
- * @apiSampleRequest https://callin.onrender.com
+ * @apiSampleRequest https://invoisely.onrender.com
  *  
  * @apiHeader {String} Authorization The token can be generated from your user profile.
  * @apiHeaderExample {Header} Header-Example

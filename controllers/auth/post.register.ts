@@ -7,7 +7,7 @@
  * @apiSuccess {Boolean} success Request success
  * @apiSuccess {Object} response User Data
  * @apiPermission anyone
- * @apiSampleRequest https://callin.onrender.com
+ * @apiSampleRequest https://invoisely.onrender.com
  * @apiBody {String} email  User's email
  * @apiBody {String} password  User's password
  * @apiBody {String} role  Role of the user
@@ -59,6 +59,7 @@ import { createUser } from "../../services/auth/createUser";
 import { userService } from "../../services/users";
 import { UserRole } from "../../interfaces/users";
 import { AuthRequest } from "../../middleware";
+import { Validator } from "../../database/validators";
 const { BASE_URL } = process.env;
 
 interface Body {
@@ -72,10 +73,12 @@ const data: IData = {
       email: {
         required: true,
         fieldName: "Email",
+        validate: Validator.isEmail,
       },
       password: {
         required: true,
         fieldName: "Password",
+        validate: Validator.isPasswordStrong,
       },
       role: {
         required: true,

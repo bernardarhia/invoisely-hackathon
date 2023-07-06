@@ -7,7 +7,7 @@
  * @apiSuccess {Boolean} success Request success
  * @apiSuccess {Object} response User Data
  * @apiPermission anyone
- * @apiSampleRequest https://callin.onrender.com
+ * @apiSampleRequest https://invoisely.onrender.com
  * @apiBody {String} email  User's email
  * @apiBody {String} password  User's password
  * @apiSuccessExample {json}

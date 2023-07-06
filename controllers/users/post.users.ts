@@ -1,4 +1,5 @@
 
+import { Validator } from "../../database/validators";
 import {
   sendFailedResponse,
   sendSuccessResponse,
@@ -14,13 +15,18 @@ const data: IData<IUser> = {
   requireAuth: true,
   rules: {
     body: {
+     
       email: {
         required: true,
-      },
-      phone: {
-        required: true,
+        fieldName: "Email",
+        validate: Validator.isEmail,
       },
       password: {
+        required: true,
+        fieldName: "Password",
+        validate: Validator.isPasswordStrong,
+      },
+      phone: {
         required: true,
       },
       role: {
