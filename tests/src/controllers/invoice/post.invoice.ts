@@ -91,7 +91,7 @@ describe("CREATE INVOICE /invoices/create", function () {
                 ...invoice, userId: mockUser.getId(dummyKey2),
                 discount: { type: discountTypes.type, amount: discountTypes.amount }
             });
-
+console.log(res.body.response.items)
         res.status.should.be.a("number").eql(201)
         res.body.should.have.property("success").eql(true)
         res.body.should.have.property("response").should.be.a("object")

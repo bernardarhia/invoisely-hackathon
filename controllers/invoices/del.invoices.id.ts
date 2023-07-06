@@ -1,5 +1,37 @@
 
-
+/**
+ * @api {DELETE} /api/:invoiceId/delete Delete
+ * @apiName Delete Invoice
+ * @apiGroup Invoice
+ * @apiVersion 0.0.1
+ * @apiDescription Endpoint use to delete a single invoice 
+ * @apiSuccess {Boolean} success Request success
+ * @apiSuccess {Object} response Data
+ * @apiPermission admin
+ * @apiSampleRequest https://invoisely.onrender.com
+ * @apiParam {String} invoiceId The Invoice Id.
+ * @apiSuccessExample {json}
+    Success-Response:
+ *  HTTP/1.1 200 OK
+ * {
+    "success": true,
+    "response": {
+        "message": "Invoice deleted",
+    }
+}
+ * 
+ * @apiError InvoiceIdRequired
+ * @apiError Unauthorized   You cannot access this route.
+ * @apiErrorExample {json}
+ * Error-Response:
+ * HTTP/1.1 400 BAD REQUEST
+ * {
+ *  "success":false,
+ *  "response":{
+ *    "message": "Invoice id is  Required"
+ *  }
+ * }
+ */
 import {
     sendFailedResponse,
     sendSuccessResponse,

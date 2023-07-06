@@ -46,6 +46,11 @@ This command builds the app from typescript into javascript
 ```
 This command starts the app
 
+
+> **Note:**
+> When an authorization token expires, use the /refresh endpoint to generate a new one
+
+
 ## Starting the app documentation
 
 - npm run build-docs
