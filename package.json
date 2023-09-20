@@ -13,7 +13,8 @@
     "type": "module",
     "build-docs": "apidoc -i ./controllers -o ./docs/",
     "prod-build": "tsc -p tsconfig.json",
-    "prod-start": "cross-env NODE_ENV=production node ./build/index.js"
+    "prod-start": "cross-env NODE_ENV=production node ./build/index.js",
+    "staging-start": "cross-env NODE_ENV=development node ./build/index.js",
   },
   "keywords": [],
   "author": "",
